@@ -1,0 +1,344 @@
+<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>NarutoStudy</title>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#111118;--ink:#1c1c28;--card:#1e1e2a;--c2:#252533;--bd:rgba(255,255,255,.1);--or:#ff7a00;--or2:#ffc247;--tx:#f5f5f5;--mu:#7d7d99;--bl:#3b9cff;--rd:#e3350d;--gr:#3daa56;--hp:#58c914;color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box;margin:0}
+body{background:radial-gradient(ellipse 60% 50% at 10% 10%,rgba(255,122,0,.1),transparent),radial-gradient(ellipse 50% 40% at 90% 90%,rgba(59,76,202,.12),transparent),#111118;color:var(--tx);font:14px 'DM Sans',system-ui,sans-serif;min-height:100vh}
+.sb{position:fixed;left:0;top:0;bottom:0;width:220px;background:var(--ink);border-right:1px solid var(--bd);display:flex;flex-direction:column;z-index:5}
+.lg{display:flex;align-items:center;gap:10px;padding:20px;border-bottom:1px solid var(--bd);cursor:pointer;font:9px/1.5 'Press Start 2P',monospace;color:var(--or2)}
+.lg span{font:26px sans-serif}.lg i{color:#fff;font-style:normal}
+.co{margin:12px 16px;background:rgba(255,122,0,.07);border:1px solid rgba(255,122,0,.25);border-radius:8px;padding:8px 12px;font:8px 'Press Start 2P',monospace;color:var(--or2)}
+#nv{padding:8px;flex:1;overflow:auto}
+.ni{display:flex;gap:10px;align-items:center;width:100%;background:none;border:0;color:#9a9ab3;padding:10px 14px;border-radius:8px;font-size:14px;font-weight:500;text-align:left;margin-bottom:2px;cursor:pointer}
+.ni:hover{background:rgba(255,255,255,.06);color:#fff}.ni.on{background:rgba(255,122,0,.12);color:var(--or2);font-weight:700}
+.mc{margin-left:220px;padding:30px 36px;max-width:1160px}
+.ph{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:22px}
+.pt,.ct{font:12px 'Press Start 2P',monospace;color:var(--or2);margin-bottom:8px;line-height:1.6}.pt{font-size:13px}
+.ps,.mu{color:var(--mu);font-size:12px}.ps{margin-top:5px;font-size:13px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:18px;padding:18px;margin-bottom:14px}
+.g{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}.g .card{margin:0}
+.sg{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;margin-bottom:18px}
+.stc{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:14px 16px}.sv{font:16px 'Press Start 2P',monospace;color:var(--or2);margin-bottom:6px}.sl{font-size:12px;color:var(--mu)}
+button,select,input,textarea{font:inherit;color:var(--tx)}
+button{background:var(--c2);border:1px solid var(--bd);border-radius:10px;padding:9px 14px;cursor:pointer;font-weight:600}
+button:hover:not(:disabled){border-color:var(--or)}button:disabled{opacity:.4;cursor:not-allowed}
+.btn{background:var(--or2);color:#1a1000;border-color:var(--or2);font-weight:800}
+.big{width:100%;padding:14px;font-size:15px;border-radius:30px;margin-top:14px}
+input,select,textarea{background:var(--c2);border:1px solid var(--bd);border-radius:10px;padding:11px 14px;width:100%}
+label{display:block;font:10px 'Press Start 2P',monospace;color:var(--mu);margin:12px 0 6px;text-transform:uppercase}
+.two{display:grid;grid-template-columns:1.1fr 1fr;gap:18px}
+.row{display:flex;justify-content:space-between;align-items:center;padding:12px 14px;border-radius:12px;margin-bottom:8px;font-weight:700;background:var(--c2)}.row b{font:13px 'Press Start 2P',monospace;color:var(--or2)}
+.rg{display:flex;gap:8px;align-items:center;margin:6px 0;flex-wrap:wrap}.rg select,.rg input[type=file]{width:auto}
+.bar{height:9px;background:#0007;border-radius:6px;overflow:hidden;margin:4px 0}.bar i{display:block;height:100%;transition:width .5s}
+pre{background:#0008;border-radius:10px;padding:12px;font-size:11px;max-height:200px;overflow:auto;margin-bottom:8px}
+.bt{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;font-weight:700}
+.rt{display:flex;align-items:center;gap:10px;background:rgba(227,53,13,.08);border:1px solid rgba(227,53,13,.3);border-radius:10px;padding:8px 14px;margin-bottom:12px;font:8px 'Press Start 2P',monospace}.rt .bar{flex:1;height:8px}
+.bw{display:grid;grid-template-columns:1fr 290px;gap:14px;margin-bottom:14px}.bw .card{margin:0}
+.sc{position:relative;min-height:310px;border-radius:20px;background:linear-gradient(#123a68,#0a1a33 70%);border:1px solid var(--bd);overflow:hidden}
+.ic{position:absolute;width:210px;background:#050c1ccc;border:1px solid var(--bd);border-radius:12px;padding:10px 14px}.ic b{font:9px 'Press Start 2P',monospace}
+.e1{top:14px;left:14px}.e2{bottom:14px;right:14px}.hr{display:flex;justify-content:space-between;font-size:11px;color:var(--mu)}
+.spr{position:absolute;font-size:84px;filter:drop-shadow(0 0 16px var(--or));animation:fl 2.4s ease-in-out infinite}.s1{top:28px;right:70px}.s2{bottom:30px;left:80px}
+@keyframes fl{50%{transform:translateY(-8px)}}
+.tb,.bdg{display:inline-block;font-size:10px;font-weight:800;border-radius:5px;padding:2px 8px;background:#555;margin:2px 4px 2px 0}.bdg{background:var(--rd)}
+.lgb{font-size:12px;max-height:330px;overflow:auto}.lgb div{padding:5px 0;border-bottom:1px solid var(--bd)}
+.tj{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px;margin-bottom:10px}.tj button{text-align:left;padding:12px 14px}
+.o{display:block;width:100%;text-align:left;margin:6px 0}
+.bl{width:130px;display:inline-block;margin:2px 4px;padding:6px}
+h3{margin:6px 0 10px}
+#toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:var(--or2);color:#1a1000;padding:9px 18px;border-radius:20px;font-weight:700;display:none;z-index:9}
+.ov{position:fixed;inset:0;background:rgba(5,5,12,.8);display:flex;align-items:center;justify-content:center;z-index:20;padding:16px}
+.md{background:var(--card);border:2px solid var(--or2);border-radius:26px;padding:26px;width:min(640px,100%);max-height:90vh;overflow:auto;box-shadow:0 0 40px rgba(255,194,71,.35)}
+.md.bad{border-color:var(--rd);box-shadow:0 0 40px rgba(227,53,13,.45)}.md.good{border-color:var(--gr);box-shadow:0 0 40px rgba(61,170,86,.45)}
+.mi{border:1px solid var(--bd);border-radius:16px;padding:18px}
+.mh{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.rs{text-align:center}.rs .e{font-size:62px}.rs .an{background:var(--c2);border-radius:10px;padding:12px;font-weight:700;margin:10px 0}
+.tc{background:linear-gradient(160deg,#252538,#1e1e2a)}
+@media(max-width:800px){.sb{position:static;width:auto;flex-direction:row;flex-wrap:wrap}.lg{border:0}.co{margin:8px}#nv{display:flex;flex-wrap:wrap;width:100%}.ni{width:auto}.mc{margin:0;padding:16px}.two,.bw{grid-template-columns:1fr}.ic{width:165px}.s1{right:10px}.s2{left:20px}}
+</style></head><body>
+<aside class="sb"><div class="lg" onclick="go('d')"><span>🍥</span><div>Naruto<i>Study</i></div></div><div class="co" id="co"></div><div id="nv"></div></aside>
+<main class="mc"><div id="v"></div></main><div id="mo"></div><div id="toast"></div>
+<script>
+const $=s=>document.querySelector(s),R=a=>a[Math.random()*a.length|0],
+sh=a=>{for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a},
+esc=s=>{const d=document.createElement('div');d.textContent=s==null?'':s;return d.innerHTML},
+nz=s=>String(s).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').trim();
+const RK=['Genin','Chunin','Jonin','ANBU','Sannin','Kage'];
+const EL={fire:['🔥','Katon','wind'],wind:['🌪️','Fūton','lightning'],lightning:['⚡','Raiton','earth'],earth:['🪨','Doton','water'],water:['💧','Suiton','fire']};
+const TY={tai:'👊 Taijutsu',nin:'🌀 Ninjutsu',gen:'👁️ Genjutsu',sel:'🙏 Sellos'};
+const D={easy:[18,.7,'Fácil — el rival responde lento'],medium:[10,1,'Media'],hard:[5,1.3,'Difícil — el rival ataca rápido']};
+// c=chakra p=poder e=elemento f=congelar(s) r=nivel mínimo $=precio
+const J=[
+{id:'puno',n:'Puño Firme',t:'tai',c:0,p:9,r:1},{id:'senpu',n:'Konoha Senpū',t:'tai',c:0,p:14,r:3},{id:'loto',n:'Loto Primario',t:'tai',c:0,p:26,r:10,ma:'guy'},
+{id:'palma',n:'Palma Suave',t:'tai',c:0,p:16,r:1,cl:['hyuga']},{id:'expan',n:'Expansión Parcial',t:'tai',c:0,p:24,r:5,cl:['akimichi']},
+{id:'bola',n:'Bola de Fuego',t:'nin',c:14,p:26,e:'fire',r:1},{id:'gran',n:'Gran Bola de Fuego',t:'nin',c:36,p:62,e:'fire',r:10},
+{id:'agua',n:'Dragón de Agua',t:'nin',c:16,p:28,e:'water',r:1},{id:'agua2',n:'Explosión de Agua',t:'nin',c:34,p:58,e:'water',r:10},
+{id:'viento',n:'Cuchilla de Viento',t:'nin',c:15,p:27,e:'wind',r:1},{id:'viento2',n:'Gran Ruptura',t:'nin',c:35,p:60,e:'wind',r:10},
+{id:'rayo',n:'Chispa Relámpago',t:'nin',c:15,p:27,e:'lightning',r:1},{id:'chidori',n:'Chidori',t:'nin',c:26,p:44,e:'lightning',r:5},
+{id:'tierra',n:'Dragón de Tierra',t:'nin',c:16,p:28,e:'earth',r:1},{id:'tierra2',n:'Muralla de Piedra',t:'nin',c:34,p:58,e:'earth',r:10},
+{id:'ras',n:'Rasengan',t:'nin',c:28,p:46,r:5,cl:['uzumaki','namikaze']},{id:'amate',n:'Amaterasu',t:'nin',c:42,p:75,r:15,dj:'sharingan'},
+{id:'plumas',n:'Ilusión de Plumas',t:'gen',c:14,p:5,f:6,r:3,ma:'kurenai'},{id:'sombra',n:'Posesión de la Sombra',t:'gen',c:18,p:4,f:10,r:5,cl:['nara']},{id:'tsuku',n:'Tsukuyomi',t:'gen',c:40,p:22,f:14,r:20,dj:'sharingan'}];
+// [id,nombre,tipo,chakra,poder,nivel,clan,congela]
+[['cadenas','Cadenas de Chakra','gen',20,6,8,'uzumaki',8],['trig','Ocho Trigramas: 64 Palmas','tai',0,32,10,'hyuga'],['shur','Lluvia de Shuriken','tai',0,17,1,'uchiha'],['moku','Mokuton: Bosque','nin',30,52,10,'senju'],['estra','Estrangulación de Sombra','gen',26,10,12,'nara',14],['tanque','Tanque Humano','tai',0,32,12,'akimichi'],['mente','Transferencia Mental','gen',20,6,4,'yamanaka',9],['kika','Insectos Kikaichū','nin',14,24,1,'aburame'],['nido','Nido de Insectos','nin',30,48,8,'aburame'],['colm','Colmillo sobre Colmillo','tai',0,20,3,'inuzuka'],['bestia','Hombre Bestia','tai',0,30,10,'inuzuka'],['enma','Invocación: Enma','nin',32,54,8,'sarutobi'],['colb','Colmillo de Chakra Blanco','tai',0,21,3,'hatake'],['hirai','Kunai Volador','tai',0,26,8,'namikaze'],['dan','Danza de la Clemátide','tai',0,26,6,'kaguya'],['bosq','Bosque de Huesos','nin',30,50,12,'kaguya'],['espejo','Espejos de Hielo Demoníacos','gen',18,8,5,'yuki',10],['liq','Cuchilla de Agua Líquida','nin',20,34,5,'hozuki'],['sello','Sello de Maldición','gen',22,6,6,'shimura',9],['arbor','Ilusión Arbórea','gen',16,4,1,'kurama',8],['ataud','Ataúd de Arena','nin',24,40,3,'sabaku'],['absol','Chakra Absoluto','nin',45,80,20,'otsutsuki'],['dura','Entrenamiento Duro','tai',0,15,2,'civil']].forEach(([id,n,t,c,p,r,cl,f])=>J.push({id,n,t,c,p,r,cl:[cl],f}));
+[['hipno','Hipnosis Sharingan','gen',22,8,8,'sharingan',9],['rot','Rotación Celestial','nin',24,40,6,'byakugan'],['shin','Shinra Tensei','nin',40,72,10,'rinnegan'],['chib','Chibaku Tensei','gen',36,14,15,'rinnegan',12]].forEach(([id,n,t,c,p,r,dj,f])=>J.push({id,n,t,c,p,r,dj,f}));
+[['combo','Combo del Instructor','tai',0,13,1,'iruka'],['asu','Cuchillas de Chakra','nin',22,36,4,'asuma'],['ray','Raikiri','nin',32,58,8,'kakashi'],['sapo','Aceite de Sapo','nin',34,60,12,'jiraiya'],['tsun','Puño Sobrehumano','tai',0,42,15,'tsunade'],['oro','Cementerio de Serpientes','gen',28,10,18,'orochimaru',12]].forEach(([id,n,t,c,p,r,ma,f])=>J.push({id,n,t,c,p,r,ma,f}));
+// g: sc=rollo booster, at=arma, rc=recuperación
+const IT={
+rpw:{n:'Rollo de Fuerza',i:'📕',$:150,g:'sc',d:'+25% de daño toda la sesión'},
+rxp:{n:'Rollo de Sabiduría',i:'📘',$:150,g:'sc',d:'XP x2 toda la sesión'},
+rry:{n:'Rollo de Fortuna',i:'📒',$:150,g:'sc',d:'Ryō x2 por enemigo toda la sesión'},
+rtm:{n:'Rollo de Reflejos',i:'📗',$:120,g:'sc',d:'+4 s al temporizador del rival'},
+rch:{n:'Rollo de Concentración',i:'📙',$:150,g:'sc',d:'Los jutsus cuestan 40% menos chakra'},
+kunai:{n:'Kunai',i:'🗡️',$:30,g:'at',dm:15,d:'Daño directo (15)'},
+bomba:{n:'Kunai explosivo',i:'💥',$:90,g:'at',dm:45,d:'Daño directo (45)'},
+humo:{n:'Bomba de humo',i:'🌫️',$:80,g:'at',fz:10,d:'Congela al rival 10 s'},
+pild:{n:'Píldora de soldado',i:'💊',$:60,g:'rc',hp:40,d:'+40 HP'},
+ramen:{n:'Ramen de Ichiraku',i:'🍜',$:110,g:'rc',hp:60,ch:30,d:'+60 HP y +30 chakra'},
+chak:{n:'Píldora de chakra',i:'🔵',$:80,g:'rc',ch:30,d:'+30 chakra'},
+elix:{n:'Elixir de chakra',i:'🧪',$:220,g:'rc',ch:80,d:'+80 chakra'}};
+// clanes: id, nombre, emoji, [vida%, chakra%, poder%], peso
+const CL=[['uzumaki','Uzumaki','🌀',[20,40,0],3],['hyuga','Hyuga','👁️',[0,10,10],3],['uchiha','Uchiha','🔥',[0,10,20],3],['senju','Senju','🌳',[30,20,0],3],['nara','Nara','🦌',[0,0,10],4],['akimichi','Akimichi','🍖',[40,0,10],4],['yamanaka','Yamanaka','💮',[0,20,5],4],['aburame','Aburame','🪲',[10,10,5],4],['inuzuka','Inuzuka','🐕',[15,0,15],4],['sarutobi','Sarutobi','🐒',[10,10,10],3],['hatake','Hatake','🐺',[0,10,15],2],['namikaze','Namikaze','⚡',[0,15,20],1],['kaguya','Kaguya','🦴',[20,0,25],1],['yuki','Yuki','❄️',[0,15,15],2],['hozuki','Hozuki','💧',[10,25,5],2],['shimura','Shimura','🕶️',[10,0,10],2],['kurama','Kurama','🌫️',[0,20,10],2],['sabaku','Sabaku no','🏜️',[10,15,15],2],['otsutsuki','Otsutsuki','🌙',[25,40,25],.5],['civil','Sin clan','🏘️',[0,0,0],10]];
+const DJ={sharingan:{n:'Sharingan',i:'🔴',b:[0,10,20],t:3},byakugan:{n:'Byakugan',i:'⚪',b:[10,25,5],t:0},rinnegan:{n:'Rinnegan',i:'🟣',b:[20,40,30],t:2}};
+const SK=[{id:'ctl',n:'Control de chakra',b:{ch:12}},{id:'ref',n:'Reflejos',b:{t:2}},{id:'fue',n:'Fuerza bruta',b:{pw:10}},{id:'vit',n:'Vitalidad',b:{hp:15}},{id:'mem',n:'Memoria eidética',b:{fc:10}},{id:'agi',n:'Agilidad',b:{t:1,pw:5}},{id:'est',n:'Estratega',b:{pw:6,ch:6}}];
+const wp=a=>{let r=Math.random()*a.reduce((t,x)=>t+x[x.length-1],0);for(const x of a){r-=x[x.length-1];if(r<=0)return x}return a[0]};
+const bo=()=>{const r={hp:0,ch:0,pw:0,t:0,fc:0},a=b=>{for(const k in b)r[k]+=b[k]};if(!S.sh)return r;
+S.sh.cl.forEach(c=>{const x=CL.find(y=>y[0]==c)[3];a({hp:x[0],ch:x[1],pw:x[2]})});const d=DJ[S.sh.dj];if(d)a({hp:d.b[0],ch:d.b[1],pw:d.b[2],t:d.t});S.sh.sk.forEach(k=>a(SK.find(x=>x.id==k).b));return r};
+const okj=j=>!j.ma&&(!j.e||S.sh.el.includes(j.e))&&(!j.cl||j.cl.some(c=>S.sh.cl.includes(c)))&&(!j.dj||S.sh.dj==j.dj);
+const cc=j=>Math.round(j.c*(B&&B.bs&&B.bs.rch?.6:1));
+let RV=0;
+function learn(q){J.forEach(j=>{if(!S.kn.includes(j.id)&&S.lv>=j.r&&okj(j)){S.kn.push(j.id);if(S.eq.length<6)S.eq.push(j.id);if(!q)T('📜 ¡Nuevo jutsu: '+j.n+'!')}});save()}
+function roll(){const f=wp(CL)[0],m=wp(CL)[0],pc=[f,m];let dj=null;
+if(pc.includes('uchiha')&&Math.random()<.65)dj='sharingan';else if(pc.includes('hyuga')&&Math.random()<.65)dj='byakugan';else if(pc.includes('otsutsuki')&&Math.random()<.25)dj='rinnegan';else if(Math.random()<.08)dj=wp([['sharingan',5],['byakugan',5],['rinnegan',1]])[0];
+S.sh={cl:pc,dj,el:sh(Object.keys(EL)).slice(0,wp([[1,55],[2,35],[3,10]])[0]),sk:sh(SK.map(x=>x.id)).slice(0,2)};S.kn=[];S.eq=[];RV=1;learn(1)}
+function fix(){if(S.mm&&!S.mm.j)S.mm=null;S.kn=S.kn.filter(i=>J.some(j=>j.id==i));S.eq=S.eq.filter(i=>S.kn.includes(i));if(!S.sh)roll();else learn(1)}
+const rw=(l,v)=>`<div class="row">${l}<b style="font-size:10px;text-align:right">${v}</b></div>`;
+function rasgos(){const s=S.sh,c=s.cl.map(i=>CL.find(x=>x[0]==i)),d=DJ[s.dj];
+return rw('Padre',c[0][2]+' '+c[0][1])+rw('Madre',c[1][2]+' '+c[1][1])+(c[0][0]==c[1][0]?rw('Sangre','✨ Pura'):'')+rw('Dojutsu',d?d.i+' '+d.n:'Ninguno')+rw('Elementos',s.el.map(e=>EL[e][0]+' '+EL[e][1]).join(' · '))+rw('Habilidades',s.sk.map(k=>SK.find(x=>x.id==k).n).join(' · '))}
+function rv(){const b=bo();mo('🌟 Tu destino shinobi',`<p class="mu" style="margin-bottom:10px">Rasgos sorteados: no se pueden cambiar.</p>${rasgos()}${rw('Bonus','Vida +'+b.hp+'% · Chakra +'+b.ch+'% · Poder +'+b.pw+'%')}${rw('Jutsus iniciales',S.kn.map(i=>J.find(j=>j.id==i).n).join(' · '))}<button class="btn big" onclick="cm()">¡Comenzar!</button>`)}
+function boot(){fix();render();if(RV){RV=0;rv()}}
+
+const E=[
+{n:'Bandido',i:'🥷',h:30,a:6},{n:'Gato Tora',i:'😾',h:25,a:5},{n:'Ninja renegado',i:'🦹',h:38,a:8,e:'wind'},
+{n:'Haku',i:'🧊',h:60,a:11,e:'water'},{n:'Zabuza',i:'🗡️',h:90,a:14,e:'water',b:1},{n:'Gaara',i:'🏜️',h:120,a:17,e:'earth',b:1},
+{n:'Kisame',i:'🦈',h:140,a:19,e:'water',b:1},{n:'Itachi',i:'👁️',h:170,a:22,e:'fire',b:1},{n:'Orochimaru',i:'🐍',h:180,a:23,e:'earth',b:1},
+{n:'Kakuzu',i:'🧵',h:200,a:25,e:'lightning',b:1},{n:'Pain',i:'🌀',h:240,a:28,e:'wind',b:1},{n:'Madara',i:'🔥',h:300,a:32,e:'fire',b:1}];
+const DEMO={nombre:'Demo: ciencia y lengua',descripcion:'Temario de prueba con los 5 tipos de pregunta.',puntos:[
+{nombre:'Naturaleza',preguntas:[
+{tipo:'multiple',pregunta:'¿Qué orgánulo realiza la fotosíntesis?',opciones:['Mitocondria','Cloroplasto','Núcleo','Ribosoma'],correcta:1},
+{tipo:'vf',pregunta:'El sonido se propaga en el vacío.',respuesta:false},
+{tipo:'rellenar',texto:'La ___ es la unidad básica de los seres vivos.',respuestas:['célula']}]},
+{nombre:'Lengua y física',preguntas:[
+{tipo:'flashcard',frente:'¿Qué es un sinónimo?',dorso:'Palabra con significado igual o parecido a otra.'},
+{tipo:'relacionar',pregunta:'Relaciona magnitud y unidad',pares:[{izq:'Fuerza',der:'Newton'},{izq:'Energía',der:'Julio'},{izq:'Potencia',der:'Vatio'}]},
+{tipo:'multiple',pregunta:'¿Velocidad aproximada de la luz?',opciones:['300 000 km/s','3 000 km/s','30 000 km/s','340 m/s'],correcta:0}]}]};
+const TPL={nombre:'Mi temario',puntos:[{nombre:'Punto 1',preguntas:[
+{tipo:'multiple',pregunta:'¿...?',opciones:['A','B','C','D'],correcta:1},{tipo:'vf',pregunta:'...',respuesta:true},
+{tipo:'rellenar',texto:'El ___ es ...',respuestas:['sol']},{tipo:'flashcard',frente:'...',dorso:'...'},
+{tipo:'relacionar',pregunta:'Relaciona',pares:[{izq:'a',der:'1'},{izq:'b',der:'2'}]}]}]};
+const VT=['multiple','vf','rellenar','flashcard','relacionar'];
+
+const K='narutostudy_v2';
+const DEF=()=>({name:'Ninja',av:'🥷',lv:1,xp:0,ryo:100,kn:[],eq:[],u:{},inv:{},tm:[DEMO],ok:0,tot:0,w:0,l:0,sh:null,sp:0,st:{hp:0,ch:0,nin:0,tai:0,gen:0},jl:{},vil:'konoha',bd:{},rep:{},mc:0,mm:null,ms:[]});let S=DEF(),B=null,TI=null,sec='d',te=null,pre=null;
+try{Object.assign(S,JSON.parse(localStorage.getItem(K)||'{}'))}catch(e){}
+const save=()=>{try{localStorage.setItem(K,JSON.stringify(S))}catch(e){}};
+function T(m){const t=$('#toast');t.textContent=m;t.style.display='block';clearTimeout(T.t);T.t=setTimeout(()=>t.style.display='none',2600)}
+const rk=()=>RK[Math.min(5,(S.lv-1)/5|0)],need=()=>S.lv*60,mxHp=()=>Math.round((60+S.lv*10+S.st.hp*5)*(1+bo().hp/100)),mxCh=()=>Math.round((40+S.lv*3+S.st.ch*3)*(1+bo().ch/100)),mast=id=>1+Math.floor((S.u[id]||0)/10)*.05,lm=()=>(1+S.lv*.06)*(1+bo().pw/100);
+const bar=(p,c)=>`<div class="bar"><i style="width:${Math.max(0,Math.min(100,p))}%;background:${c}"></i></div>`;
+const hc=p=>p>50?'var(--hp)':p>25?'var(--or2)':'var(--rd)';
+function addXp(n){S.xp+=n;while(S.xp>=need()){S.xp-=need();S.lv++;S.sp+=3;T('🎉 ¡Nivel '+S.lv+'! +3 puntos de estadística')}learn()}
+function dlf(n,t){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([t],{type:'application/json'}));a.download=n;a.click()}
+
+function nav(){$('#co').textContent='💰 '+S.ryo+' ryō';$('#nv').innerHTML=[['d','🏯','Dashboard'],['t','📚','Temarios'],['b','⚔️','Batallar'],['s','🛒','Tienda'],['m','🗺️','Mapa'],['x','🎓','Maestros'],['p','🥷','Perfil']].map(([k,i,l])=>`<button class="ni ${sec==k?'on':''}" onclick="go('${k}')"><span>${i}</span>${l}</button>`).join('')}
+function go(k){if(B&&!B.done&&k!=sec){T('Termina o huye del combate primero');return}if(B&&B.done)B=null;sec=k;te=null;cm();render()}
+function render(){nav();({d:dash,t:tem,b:bat,s:shop,m:map,x:maes,p:perf})[sec]()}
+const ph=(t,s)=>`<div class="ph"><div><div class="pt">${t}</div><div class="ps">${s||''}</div></div></div>`;
+
+function dash(){const a=S.tot?Math.round(S.ok/S.tot*100):0;
+$('#v').innerHTML=ph('🏯 Dashboard',`Bienvenido, ${esc(S.name)} · ${rk()}`)+`<div class="sg">${[['Nivel',S.lv],['Rango',rk()],['Ryō',S.ryo],['Victorias',S.w],['Derrotas',S.l],['Aciertos',a+'%']].map(([l,v])=>`<div class="stc"><div class="sv">${v}</div><div class="sl">${l}</div></div>`).join('')}</div>
+<div class="card"><div class="ct">✨ Experiencia</div><div class="mu">${S.xp}/${need()} XP para el nivel ${S.lv+1}</div>${bar(S.xp/need()*100,'var(--or)')}<button class="btn" style="margin-top:8px" onclick="go('b')">⚔️ ¡A Batallar!</button></div>
+<div class="card"><div class="ct">📄 Plantilla JSON de temario</div><pre>${esc(JSON.stringify(TPL,null,2))}</pre><button onclick="cp()">📋 Copiar</button> <button onclick="dlf('plantilla_temario.json',JSON.stringify(TPL,null,2))">⬇️ Descargar</button></div>`}
+function cp(){const t=JSON.stringify(TPL,null,2);navigator.clipboard.writeText(t).then(()=>T('Plantilla copiada'),()=>T('No se pudo copiar'))}
+
+function mo(t,h,w){$('#mo').innerHTML=`<div class="ov" onclick="if(event.target==this)cm()"><div class="md" style="${w||''}"><div class="mh"><div class="ct" style="margin:0">${t}</div><button onclick="cm()">✖</button></div>${h}</div></div>`}
+function cm(){$('#mo').innerHTML=''}
+function tem(){const n=t=>t.puntos.reduce((a,p)=>a+p.preguntas.length,0);
+$('#v').innerHTML=`<div class="ph"><div><div class="pt">📚 Temarios</div><div class="ps">Gestiona y estudia tus materias</div></div><div class="rg"><button onclick="mImp()">📥 Importar JSON</button><button class="btn" onclick="mNew()">+ Nuevo</button></div></div>
+<div class="g">${S.tm.map((t,i)=>`<div class="card tc"><div class="ct" style="font-size:11px">${esc(t.nombre)}</div><div class="mu" style="min-height:34px">${esc(t.descripcion||'Sin descripción')}</div><div class="mu" style="margin:10px 0"><b style="color:#fff">${t.puntos.length}</b> puntos &nbsp; <b style="color:#fff">${n(t)}</b> preguntas</div><div class="rg"><button class="btn" onclick="ed(${i})">✏️ Editar</button><button style="background:#3b4cca" onclick="pre=${i};go('b')">▶ Jugar</button><button onclick="dlf('temario_${i+1}.json',JSON.stringify(S.tm[${i}],null,2))">⬇️</button><button style="background:#b01a00" onclick="mDel(${i})">🗑️</button></div></div>`).join('')||'<div class="card"><p class="mu">No hay temarios. Crea uno con «+ Nuevo».</p></div>'}</div>`}
+function mNew(){mo('➕ Nuevo temario',`<label>Nombre</label><input id="nn"><label>Descripción</label><input id="nd"><button class="btn big" onclick="nw()">Crear</button>`,'width:min(480px,100%)')}
+function mImp(){mo('📥 Importar JSON',`<p class="mu">Temario completo (nombre + puntos) o array de preguntas de PokéStudy.</p><textarea id="js" rows="8" style="margin:8px 0" placeholder='{"nombre":"Mi temario","puntos":[...]}'></textarea><input type="file" accept=".json" onchange="fl(this)" style="margin-bottom:8px"><button class="btn big" onclick="imp($('#js').value)">Importar</button>`)}
+function mDel(i){mo('🗑️ Eliminar temario',`<p>¿Eliminar «${esc(S.tm[i].nombre)}»?</p><div class="rg" style="margin-top:12px"><button style="background:#b01a00" onclick="del(${i})">Sí, eliminar</button><button onclick="cm()">Cancelar</button></div>`,'width:min(420px,100%)')}
+function ed(x){if(x!=null)te=x;const t=S.tm[te];if(!t)return;
+mo('✏️ '+esc(t.nombre),t.puntos.map((p,i)=>`<div class="mi" style="margin-bottom:10px"><div class="rg"><b style="flex:1">${i+1}. ${esc(p.nombre)} <span class="mu">(${p.preguntas.length})</span></b><button onclick="dp(${i})">🗑️</button></div>${p.preguntas.map((q,k)=>`<div class="rg"><span class="mu" style="flex:1">${q.tipo} · ${esc((q.pregunta||q.texto||q.frente||'').slice(0,60))}</span><button onclick="dq(${i},${k})">✖</button></div>`).join('')}</div>`).join('')+
+`<div class="rg"><input id="np" placeholder="Nuevo punto" style="flex:1"><button class="btn" onclick="ap()">+ Punto</button></div>
+<label>Añadir preguntas (array JSON) al punto</label><select id="ps">${t.puntos.map((p,i)=>`<option value="${i}">${i+1}. ${esc(p.nombre)}</option>`).join('')}</select><textarea id="jq" rows="4" style="margin:8px 0" placeholder='[{"tipo":"vf","pregunta":"...","respuesta":true}]'></textarea><button class="btn" onclick="aq()">Añadir preguntas</button>`)}
+function nw(){const n=$('#nn').value.trim();if(!n)return T('Pon un nombre');S.tm.push({nombre:n,descripcion:$('#nd').value.trim(),puntos:[{nombre:'Punto 1',preguntas:[]}]});save();render();ed(S.tm.length-1)}
+function ap(){const n=$('#np').value.trim();if(!n)return T('Pon un nombre');S.tm[te].puntos.push({nombre:n,preguntas:[]});save();render();ed()}
+function dp(i){S.tm[te].puntos.splice(i,1);save();render();ed()}
+function dq(i,k){S.tm[te].puntos[i].preguntas.splice(k,1);save();render();ed()}
+function aq(){try{const a=JSON.parse($('#jq').value).filter(q=>VT.includes(q.tipo)),p=S.tm[te].puntos[$('#ps').value];if(!a.length||!p)throw 0;p.preguntas.push(...a);save();T('✅ '+a.length+' preguntas añadidas');render();ed()}catch(e){T('Necesito un array JSON de preguntas válidas')}}
+function del(i){S.tm.splice(i,1);save();cm();render()}
+function imp(s){try{let d=JSON.parse(s);if(Array.isArray(d))d={nombre:'Importado '+new Date().toLocaleDateString(),puntos:[{nombre:'Punto 1',preguntas:d}]};
+if(!d.nombre||!Array.isArray(d.puntos))throw 0;d.puntos=d.puntos.map(p=>({nombre:p.nombre||'Punto',preguntas:(p.preguntas||[]).filter(q=>VT.includes(q.tipo))}));
+S.tm.push(d);save();cm();T('✅ Importado: '+d.nombre);render()}catch(e){T('JSON no válido: necesita "nombre" y "puntos"')}}
+function fl(i){const f=i.files[0];if(f)f.text().then(imp)}
+function bat(){if(B)return fight();
+$('#v').innerHTML=ph('⚔️ Sala de Batalla')+`<div class="card" style="display:flex;justify-content:space-between;align-items:center;gap:10px"><span class="mu">📍 ${VG(S.vil)[2]} ${VG(S.vil)[1]} · enemigos de ${EL[VG(S.vil)[4]][0]} · misiones activas: ${act().length}/3</span><button onclick="go('m')">Mapa →</button></div>
+<div class="two"><div class="card"><div class="ct">🥷 Configurar Batalla</div>
+<label>Temario a estudiar</label><select id="ts" onchange="pl()">${S.tm.map((t,i)=>`<option value="${i}">${esc(t.nombre)}</option>`).join('')}</select>
+<label>Punto(s) a estudiar, en orden (ej. 1 2 3)</label><input id="pp" placeholder="vacío = todos"><div class="mu" id="pl" style="margin-top:6px"></div>
+<label>Dificultad del rival</label><select id="df">${Object.entries(D).map(([k,v])=>`<option value="${k}" ${k=='medium'?'selected':''}>${v[2]}</option>`).join('')}</select>
+<label>Condición de fin</label><select id="cd"><option value="t">⏱️ Por tiempo (minutos)</option><option value="r">🔁 Por rondas completas</option></select>
+<label>Minutos de estudio / rondas</label><input id="am" type="number" min="1" value="15">
+<button class="btn big" onclick="start()">⚔️ ¡A Batallar!</button></div>
+<div><div class="card"><div class="ct">📊 Estadísticas</div><div class="row">🏆 Victorias<b>${S.w}</b></div><div class="row">💀 Derrotas<b>${S.l}</b></div><div class="row">💰 Ryō<b>${S.ryo}</b></div><div class="row">⭐ Nivel<b>${S.lv}</b></div></div>
+<div class="card"><div class="ct">🎒 Inventario rápido</div><div class="rg">${Object.entries(IT).filter(([k])=>S.inv[k]).map(([k,v])=>`<div class="stc" style="text-align:center;padding:8px 10px">${v.i}<div class="sl">x${S.inv[k]||0}</div></div>`).join('')}</div><button onclick="go('s')" style="width:100%;margin-top:6px">🛒 Ir a la Tienda</button></div></div></div>`;if(pre!=null){$('#ts').value=pre;pre=null}pl()}
+function pl(){const t=S.tm[$('#ts').value];$('#pl').textContent=t?t.puntos.map((p,i)=>`${i+1}. ${p.nombre} (${p.preguntas.length})`).join(' · '):'Importa un temario primero'}
+function start(){const t=S.tm[$('#ts').value];if(!t)return T('Necesitas un temario');
+let ix=$('#pp').value.split(/[\s,]+/).map(Number).filter(n=>n>=1&&n<=t.puntos.length).map(n=>n-1);if(!ix.length)ix=t.puntos.map((_,k)=>k);
+const qs=ix.flatMap(k=>sh([...t.puntos[k].preguntas]));if(!qs.length)return T('Esos puntos no tienen preguntas');
+const cd=$('#cd').value,am=Math.max(1,+$('#am').value||1);
+B={qs,qi:0,bs:{},d:[D[$('#df').value][0]+bo().t,D[$('#df').value][1]],hp:mxHp(),ch:mxCh(),combo:0,ok:0,tot:0,kills:0,gr:0,gx:0,log:['¡Ve '+S.name+'!'],cd,am,end:cd=='t'?Date.now()+am*6e4:0};
+spawn();render();clearInterval(TI);TI=setInterval(tick,1000)}
+function spawn(){const b=B,mx=Math.min(E.length-1,2+(S.lv/3|0)),e=E[Math.max(0,mx-(Math.random()*4|0))],lv=Math.max(1,S.lv+(Math.random()*3|0)-1),hp=Math.round(e.h*(1+lv*.12));
+b.e={...e,lv,hp,mx:hp,a:e.a*(1+lv*.08)};if(Math.random()<.6)b.e.e=VG(S.vil)[4];b.sec=b.d[0];b.fz=0;b.ph='menu';b.log.push(`✨ ¡${e.n} Nv.${lv} apareció!`)}
+function tick(){const b=B;if(!b||b.done||b.ph=='res'||b.pz)return;
+if(b.cd=='t'&&Date.now()>=b.end)return fin(1,'¡Tiempo de estudio completado!');
+if(b.fz>0)b.fz--;else b.sec--;
+if(b.sec<=0){b.log.push(`😤 ¡${b.e.n} atacó sin esperar!`);return eat()}
+rt()}
+function rt(){const b=B,x=$('#rt');if(!x||!b)return;const p=b.sec/b.d[0]*100;
+x.innerHTML=`<span>😤 RIVAL</span>${bar(p,hc(p))}<span>${b.fz>0?'❄️'+b.fz:b.sec+'s'}</span>${b.cd=='t'?`<span>⏱️ ${Math.max(0,(b.end-Date.now())/6e4).toFixed(1)}m</span>`:''}`}
+function nxt(){const b=B;if(b.cd=='t'&&Date.now()>=b.end)return fin(1,'¡Tiempo de estudio completado!');if(b.cd=='r'&&b.qi>=b.qs.length*b.am)return fin(1,'¡Rondas completadas!');b.res=null;b.ph='menu';b.sec=b.d[0];render()}
+function eat(){const b=B,e=b.e,dm=Math.max(1,Math.round(e.a*b.d[1]*(.85+Math.random()*.3)));b.hp-=dm;b.fz=0;b.log.push(`⚡ ${e.n} te golpea → ${dm} dmg`);
+if(b.hp<=0){b.hp=0;b.log.push('💀 ¡Has caído!');return fin(0,'Te has quedado sin vida.')}
+nxt()}
+const TQ={multiple:'🔤 Elige la respuesta',vf:'✅ Verdadero o falso',rellenar:'✏️ Rellena los huecos',flashcard:'🃏 Flashcard',relacionar:'🔗 Relaciona'};
+function pick(id){const b=B,j=J.find(x=>x.id==id);if(b.ph!='menu')return;if(b.ch<cc(j))return T('Chakra insuficiente: usa Sellos de Chakra o el Inventario');
+b.j=j;b.q=b.qs[b.qi%b.qs.length];b.fl=0;b.pz=0;b.pct=null;b.rs=b.q.tipo=='relacionar'?sh(b.q.pares.map(p=>p.der)):0;b.ph='q';render()}
+function qh(){const b=B,q=b.q,t=q.tipo;let h=`<div class="ct">${TQ[t]}</div><div class="mu" style="margin-bottom:8px">${TY[b.j.t]} · ${esc(b.j.n)}</div>`;
+if(t=='multiple')h+=`<h3>${esc(q.pregunta)}</h3>`+q.opciones.map((o,i)=>`<button class="o" onclick="ans(${i==q.correcta})">${esc(o)}</button>`).join('');
+else if(t=='vf')h+=`<h3>${esc(q.pregunta)}</h3><button class="o" onclick="ans(${q.respuesta===true})">✅ Verdadero</button><button class="o" onclick="ans(${q.respuesta===false})">❌ Falso</button>`;
+else if(t=='rellenar')h+=`<p style="font-weight:700;font-size:16px;line-height:2">${esc(q.texto).split('___').map((s,i,a)=>s+(i<a.length-1?'<input class="bl" onkeydown="if(event.key==\'Enter\')chk()">':'')).join('')}</p><button class="btn big" onclick="chk()">Comprobar →</button>`;
+else if(t=='flashcard'){h+=`<h3>${esc(q.frente||q.pregunta)}</h3>`;
+if(!b.fl)h+=`<button class="btn big" onclick="fcShow()">Ver dorso</button>`;
+else if(b.fl==1)h+=`<div class="an" style="background:var(--c2);border-radius:10px;padding:12px;font-weight:700">${esc(q.dorso||q.respuesta)}</div><div class="mu">🧠 Memoriza... <b id="fcs">5</b>s (el rival espera)</div><div class="bar"><i id="fcb" style="width:100%;transition:width 5s linear"></i></div>`;
+else h+=`<div class="ct" style="margin-top:6px">✏️ ¡Escribe la respuesta!</div><textarea id="fa" rows="3" placeholder="Con tus palabras: vale si usas los conceptos clave"></textarea><button class="btn big" onclick="fcChk()">Comprobar →</button>`}
+else h+=`<h3>${esc(q.pregunta||'Relaciona')}</h3>`+q.pares.map(p=>`<div class="rg"><b>${esc(p.izq)}</b> → <select class="rl"><option value="">…</option>${b.rs.map(r=>`<option>${esc(r)}</option>`).join('')}</select></div>`).join('')+`<button class="btn big" onclick="chk()">Comprobar →</button>`;
+return h}
+function chk(){const q=B.q;let ok;
+if(q.tipo=='rellenar'){const v=[...document.querySelectorAll('.bl')].map(i=>nz(i.value));ok=q.respuestas.every((r,i)=>v[i]==nz(r))}
+else{const v=[...document.querySelectorAll('.rl')].map(s=>s.value);ok=q.pares.every((p,i)=>v[i]==p.der)}
+ans(ok)}
+function sol(q){const t=q.tipo;return t=='multiple'?q.opciones[q.correcta]:t=='vf'?(q.respuesta?'Verdadero':'Falso'):t=='rellenar'?q.respuestas.join(', '):t=='flashcard'?(q.dorso||q.respuesta):q.pares.map(p=>p.izq+' → '+p.der).join('; ')}
+const FC=.6,SW=new Set('para como pero donde cuando entre sobre desde hasta esta este esto estos estas tiene tienen otra otro otros cada muy mas por con del las los una uno unos unas que sus son ser fue han hay sin nos les cual cuales mediante tambien asi segun'.split(' '));
+const nt=s=>nz(s).replace(/[^a-z0-9\s]/g,' ').replace(/\s+/g,' ').trim();
+const near=(a,b)=>{if(a==b)return 1;if(a.length<5||Math.abs(a.length-b.length)>1)return 0;let i=0;while(i<a.length&&a[i]==b[i])i++;return a.slice(i+1)==b.slice(i+1)||a.slice(i)==b.slice(i+1)||a.slice(i+1)==b.slice(i)};
+function sim(a,r){a=nt(a);r=nt(r);if(!a)return 0;if(a==r)return 1;const aw=a.split(' ');let k=r.split(' ').filter(w=>w.length>=4&&!SW.has(w));if(!k.length)k=r.split(' ');
+return k.filter(w=>{const st=w.slice(0,Math.max(4,w.length-2));return aw.some(x=>near(x,w)||(w.length>=5&&x.length>=4&&x.startsWith(st)))}).length/k.length}
+function fcShow(){const b=B;b.fl=1;b.pz=1;render();requestAnimationFrame(()=>{const x=$('#fcb');if(x)x.style.width='0%'});let n=5;
+const iv=setInterval(()=>{if(B!==b||b.ph!='q'||b.fl!=1){clearInterval(iv);b.pz=0;return}n--;const e=$('#fcs');if(e)e.textContent=n;if(n<=0){clearInterval(iv);b.fl=2;b.pz=0;render()}},1000)}
+function fcChk(){const q=B.q,s=sim($('#fa').value,q.dorso||q.respuesta||''),p=Math.round(s*100);B.pct=p;ans(s>=FC-bo().fc/100)}
+function ans(ok){const b=B;if(b.ph!='q')return;const j=b.j,q=b.q;b.qi++;b.tot++;S.tot++;const pc=b.pct;b.pct=null;
+if(!ok){b.combo=0;b.res={ok:0,sol:sol(q),n:pc};b.log.push(`❌ Incorrecto: ${j.n} falla. Resp: ${sol(q)}`,`😤 ¡${b.e.n} ataca!`);b.ph='res';save();render();setTimeout(()=>{if(B===b&&!b.done)eat()},2500);return}
+b.ok++;S.ok++;b.combo++;S.ryo+=10;S.u[j.id]=(S.u[j.id]||0)+1;b.ch-=cc(j);mp('ok');if(j.t=='nin')mp('nin');mp('streak',b.combo);
+let d=0,x='',m=mast(j.id)*lm()*(1+(S.st[j.t]||0)*.04)*(1+((S.jl[j.id]||1)-1)*.12)*(b.bs.rpw?1.25:1)*(.9+Math.random()*.2);
+if(j.t=='tai'){d=j.p*m*(1+Math.min(b.combo-1,5)*.1);if(b.combo>1)x=` · combo x${b.combo}`}
+else if(j.t=='nin'){let em=1;if(j.e){const ee=b.e.e;if(ee){if(EL[j.e][2]==ee){em*=1.5;x=' · ¡Súper eficaz!'}else if(EL[ee][2]==j.e){em*=.7;x=' · resistido'}}}d=j.p*m*em}
+else if(j.t=='gen'){d=j.p*m;b.fz=Math.round(j.f*(1+((S.jl[j.id]||1)-1)*.12));x=` · ¡${b.e.n} queda atrapado ${j.f}s!`}
+else{b.ch=Math.min(mxCh(),b.ch+25);x=' · +25 chakra'}
+d=Math.round(d);b.e.hp-=d;if(j.t!='sel')b.ch=Math.min(mxCh(),b.ch+2);
+const t=`${j.n}${d?' → '+d+' dmg':''}${x}${pc!=null?' · exactitud '+pc+'%':''}`;b.res={ok:1,t};b.log.push(`✅ ¡Correcto! +10🪙 · ${t}`);
+b.dead=b.e.hp<=0;if(b.dead)b.e.hp=0;b.ph='res';save();render();
+setTimeout(()=>{if(B!==b||b.done)return;b.res=null;if(b.dead){b.dead=0;kill()}else nxt()},1400)}
+function kill(){const b=B,e=b.e,r=(15+e.lv*5)*(b.bs.rry?2:1),x=(20+e.lv*8)*(e.b?2:1)*(b.bs.rxp?2:1);b.kills++;mp('kills');if(e.b)mp('boss');S.ryo+=r;b.gr+=r;b.gx+=x;addXp(x);b.log.push(`💥 ¡${e.n} derrotado! +${r} ryō · +${x} XP`);save();spawn();nxt()}
+function use(id){const b=B,it=IT[id];if(b.ph!='inv'||!S.inv[id])return;
+if(it.g=='sc'){if(b.bs[id])return T('Ese rollo ya está activo');b.bs[id]=1;if(id=='rtm')b.d=[b.d[0]+4,b.d[1]];b.log.push(`${it.i} ${it.n} activado`)}
+else{if(it.dm){const d=Math.round(it.dm*lm()*(b.bs.rpw?1.25:1));b.e.hp-=d;b.log.push(`${it.i} ${it.n} → ${d} dmg`)}
+if(it.hp){b.hp=Math.min(mxHp(),b.hp+it.hp);b.log.push(`${it.i} +${it.hp} HP`)}
+if(it.ch){b.ch=Math.min(mxCh(),b.ch+it.ch);b.log.push(`${it.i} +${it.ch} chakra`)}
+if(it.fz){b.fz=it.fz;b.log.push(`${it.i} ¡Rival desorientado ${it.fz}s!`)}}
+S.inv[id]--;save();if(b.e.hp<=0){b.e.hp=0;return kill()}b.ph='menu';render()}
+function fin(w,why){const b=B;clearInterval(TI);b.done=1;b.win=w;b.why=why;if(w)S.w++;else S.l++;save();render()}
+function flee(){clearInterval(TI);B=null;render()}
+function fight(){const b=B,e=b.e,n=b.qs.length,hp=b.hp/mxHp()*100,eh=e.hp/e.mx*100,w=b.ph=='q'||b.ph=='res';let p,md='';
+if(b.done)p=`<div class="ct">${b.win?'🏆 ¡Sesión completada!':'💀 Derrota'}</div><p>${b.why}</p><p style="margin:8px 0">Aciertos: <b>${b.ok}/${b.tot}</b> · Enemigos: <b>${b.kills}</b> · +${b.gr} ryō · +${b.gx} XP</p><button class="btn" onclick="go('d')">Volver al Dashboard</button>`;
+else if(b.ph=='inv')p=`<div class="ct">🎒 Inventario</div><div class="tj">${Object.entries(IT).filter(([k])=>S.inv[k]).map(([k,v])=>`<button onclick="use('${k}')"><b>${v.i} ${v.n}</b> x${S.inv[k]||0}<div class="mu">${v.d}</div></button>`).join('')||'<p class="mu">Sin objetos: compra en la Tienda.</p>'}</div><button onclick="B.ph='menu';render()">← Volver</button>`;
+else p=`<div class="ct">${w?'⏳ Esperando...':'⚔️ ¿Qué hará '+esc(S.name)+'?'}</div><div class="tj" style="${w?'opacity:.45':''}">${S.eq.map(id=>J.find(x=>x.id==id)).map(j=>{const lo=b.ch<cc(j);return `<button ${w?'disabled':''} style="${lo?'opacity:.55':''}" onclick="pick('${j.id}')"><span class="tb">${TY[j.t]}${j.e?' '+EL[j.e][0]:''}</span><div><b>${j.n}</b></div><div class="mu">${j.t=='sel'?'+25 chakra':`Chakra: ${cc(j)} · ${j.t=='gen'?'Congela '+j.f+'s':'Poder: '+j.p}`}</div>${lo?'<div style="color:var(--rd);font-size:11px;font-weight:700">Sin chakra suficiente</div>':''}</button>`}).join('')}</div><button onclick="B.ph='inv';render()" ${w?'disabled':''}>🎒 Inventario</button>`;
+if(b.ph=='q')md=`<div class="ov"><div class="md"><div class="mi">${qh()}</div></div></div>`;
+else if(b.ph=='res'&&b.res)md=b.res.ok?`<div class="ov"><div class="md good"><div class="rs"><div class="e">✅</div><div class="ct" style="color:var(--gr)">¡CORRECTO!</div><div class="an">${esc(b.res.t)}</div></div></div></div>`:`<div class="ov"><div class="md bad"><div class="rs"><div class="e">❌</div><div class="ct" style="color:var(--rd)">¡INCORRECTO!</div><p class="mu">La respuesta correcta era:</p><div class="an">${esc(b.res.sol)}</div>${b.res.n!=null?`<p class="mu">Tu respuesta coincidió un ${b.res.n}%</p>`:''}<p style="color:#ff7a5c">😤 ¡${esc(e.n)} atacará en 2.5s!</p></div></div></div>`;
+$('#v').innerHTML=`<div class="bt"><button onclick="flee()">🏃 Huir</button><div>⚔️ Nv.${e.lv} ${e.n} ${e.b?'<span class="bdg">JEFE</span>':''}</div><div class="mu">Pregunta ${b.qi%n+1}/${n}</div></div><div id="rt" class="rt"></div>
+<div class="bw"><div class="sc"><div class="ic e1"><b>${e.n}</b><div class="hr"><span>Nv.${e.lv}</span><span>${Math.max(0,e.hp)}/${e.mx}</span></div>${bar(eh,hc(eh))}${e.e?`<span class="tb">${EL[e.e][0]} ${EL[e.e][1]}</span>`:''}</div>
+<div class="spr s1">${e.i}</div><div class="spr s2">${S.av}</div>
+<div class="ic e2"><b>${esc(S.name)}</b><div class="hr"><span>Nv.${S.lv} · ${rk()}</span><span>HP ${b.hp}/${mxHp()}</span></div>${bar(hp,hc(hp))}<div class="hr"><span>Chakra</span><span>${b.ch}/${mxCh()}</span></div>${bar(b.ch/mxCh()*100,'var(--bl)')}<span class="tb">Combo ${b.combo}</span></div></div>
+<div class="card lgb"><div class="ct">📜 Combat Log</div>${b.log.slice(-9).reverse().map(s=>`<div>${esc(s)}</div>`).join('')}</div></div><div class="card">${p}</div>${AM()}${md}`;rt();
+const f=document.querySelector('.md .bl,.md textarea');if(f&&b.ph=='q')f.focus()}
+
+function shop(){const bk=(t,g)=>`<div class="card"><div class="ct">${t}</div><div class="g">${Object.entries(IT).filter(([k,v])=>v.g==g).map(([k,v])=>`<div class="stc"><b>${v.i} ${v.n}</b> <span class="mu">(tienes ${S.inv[k]||0})</span><div class="mu">${v.d}</div><button class="btn" style="margin-top:8px" ${S.ryo<v.$?'disabled':''} onclick="bi('${k}')">Comprar · ${v.$} ryō</button></div>`).join('')}</div></div>`;
+$('#v').innerHTML=ph('🛒 Tienda','Tienes '+S.ryo+' ryō · los jutsus se aprenden al subir de nivel')+bk('📜 Rollos booster (duran toda la sesión)','sc')+bk('🗡️ Armas ninja','at')+bk('💊 Recuperación','rc')}
+function bi(k){if(S.ryo<IT[k].$)return;S.ryo-=IT[k].$;S.inv[k]=(S.inv[k]||0)+1;save();render()}
+const V=[['konoha','Konoha','🍃',1,'fire'],['suna','Suna','🏜️',3,'wind'],['kiri','Kiri','🌫️',6,'water'],['iwa','Iwa','🪨',8,'earth'],['kumo','Kumo','⛈️',10,'lightning'],['ame','Ame','☔',13,'water'],['taki','Taki','💦',16,'earth'],['oto','Oto','🎵',18,'wind'],['nieve','País de la Nieve','❄️',22,'water'],['uzu','Uzu (Remolino)','🌀',26,'fire']];
+const VG=id=>V.find(x=>x[0]==id)||V[0];
+const RM={D:{l:[1,9],n:1,ry:60,xp:40,rep:1,req:0},C:{l:[5,14],n:1.5,ry:150,xp:100,rep:2,req:0},B:{l:[10,24],n:2,ry:350,xp:240,rep:3,req:3},A:{l:[18,39],n:3,ry:800,xp:520,rep:5,req:8},S:{l:[30,99],n:4,ry:2000,xp:1200,rep:8,req:15}};
+const OB={kills:'Derrota {n} enemigos',ok:'Acierta {n} preguntas',streak:'Logra un combo de {n}',boss:'Derrota {n} jefes',nin:'Acierta {n} preguntas con ninjutsu'},BS={kills:4,ok:8,streak:3,boss:1,nin:5};
+const ob=(t,n)=>OB[t].replace('{n}',n),act=()=>Object.values(S.bd).flat().filter(m=>m.on);
+// Maestros: cada uno enseña 3 técnicas (niveles escalonados). Misión: [objetivo, cantidad, precio]
+const OLD={combo:['kills',5,50],plumas:['ok',20,120],asu:['kills',12,200],loto:['ok',40,250],ray:['boss',2,450],sapo:['boss',3,700],tsun:['nin',40,900],oro:['boss',5,1200]},mqf=j=>j.mq||OLD[j.id],MST=[];
+const gj=(m,tech,t,L,ty,cl)=>{const o={id:m+(t+1),n:tech+['',' II',' III'][t],t:ty,c:ty=='tai'?0:ty=='nin'?14+8*t+(L/2|0):16+6*t,p:ty=='tai'?16+10*t+(L*1.2|0):ty=='nin'?28+16*t+(L*1.5|0):6,r:L+6*t,ma:m,mq:[['kills','ok','boss'][t],[8+L,15+2*L,1+(L/8|0)][t],(40+L*15)*(t+1)]};if(ty=='gen')o.f=8+3*t;if(cl)o.cl=[cl];J.push(o)};
+[['uzumaki','Mito Uzumaki','gen','Sello de Cadenas',4],['uzumaki','Kushina Uzumaki','nin','Remolino de Chakra',8],['hyuga','Hiashi Hyuga','tai','Palmas Gemelas',3],['hyuga','Neji Hyuga','tai','Cielo de Palmas',8],
+['uchiha','Fugaku Uchiha','nin','Llamas Uchiha',4],['uchiha','Shisui Uchiha','gen','Ilusión del Cuervo',7],['senju','Hashirama Senju','nin','Bosque Sagrado',10],['senju','Tobirama Senju','nin','Torrente Senju',6],
+['nara','Shikaku Nara','gen','Red de Sombras',5],['nara','Shikamaru Nara','gen','Sombra Estranguladora',8],['akimichi','Chōza Akimichi','tai','Puño Expansivo',4],['akimichi','Chōji Akimichi','tai','Rodar de Carne',7],
+['yamanaka','Inoichi Yamanaka','gen','Lectura Mental',4],['yamanaka','Ino Yamanaka','gen','Flor Mental',7],['aburame','Shibi Aburame','nin','Enjambre Kikaichū',4],['aburame','Shino Aburame','nin','Insectos Destructores',7],
+['inuzuka','Tsume Inuzuka','tai','Garras de Lobo',4],['inuzuka','Kiba Inuzuka','tai','Colmillo Gemelo',7],['sarutobi','Hiruzen Sarutobi','nin','Pilar de Fuego',6],['sarutobi','Konohamaru Sarutobi','tai','Combo Sarutobi',5],
+['hatake','Sakumo Hatake','tai','Sable de Chakra',5],['hatake','Anciano Hatake','nin','Rayo Blanco',9],['namikaze','Minato Namikaze','nin','Rasengan Perfecto',10],['namikaze','Maestro Namikaze','tai','Danza de Kunai',6],
+['kaguya','Kimimaro Kaguya','tai','Danza del Sauce',6],['kaguya','Anciano Kaguya','nin','Lanzas de Hueso',9],['yuki','Haku','gen','Espejo de Hielo',5],['yuki','Maestro Yuki','nin','Aguja de Hielo',8],
+['hozuki','Mangetsu Hozuki','nin','Hidratación Líquida',5],['hozuki','Suigetsu Hozuki','tai','Espada Decapitadora',8],['shimura','Danzō Shimura','gen','Sello Raíz',7],['shimura','Maestro Shimura','tai','Puño Raíz',5],
+['kurama','Yakumo Kurama','gen','Ilusión del Bosque',4],['kurama','Maestro Kurama','gen','Ilusión Verdadera',8],['sabaku','Gaara','nin','Tormenta de Arena',6],['sabaku','Rasa','nin','Polvo de Oro',10],
+['otsutsuki','Hagoromo Otsutsuki','nin','Chakra Sabio',15],['otsutsuki','Hamura Otsutsuki','nin','Luz Lunar',12],['civil','Maestro Itinerante','tai','Esfuerzo de Genio',2],['civil','Instructor Civil','tai','Golpe Certero',5]]
+.forEach(([cl,n,ty,tech,L],i)=>{const id='m_'+cl+(i%2);MST.push({id,n,e:CL.find(c=>c[0]==cl)[2],t:ty,cl});for(let t=0;t<3;t++)gj(id,tech,t,L,ty,cl)});
+[['iruka','Iruka Umino','🏫','tai','combo','Combo del Instructor'],['kurenai','Kurenai Yūhi','🌸','gen','plumas','Ilusión de Plumas'],['asuma','Asuma Sarutobi','🚬','nin','asu','Cuchillas de Chakra'],['guy','Might Guy','💪','tai','loto','Loto Primario'],['kakashi','Kakashi Hatake','⚡','nin','ray','Raikiri'],['jiraiya','Jiraiya','🐸','nin','sapo','Aceite de Sapo'],['tsunade','Tsunade','💥','tai','tsun','Puño Sobrehumano'],['orochimaru','Orochimaru','🐍','gen','oro','Cementerio de Serpientes']]
+.forEach(([id,n,e,ty,j0,tech])=>{MST.push({id,n,e,t:ty});const L=J.find(x=>x.id==j0).r;for(let t=1;t<3;t++)gj(id,tech,t,L,ty)});
+function gen1(v){const rep=S.rep[v]||0;let ks=Object.keys(RM).filter(k=>S.lv>=RM[k].l[0]&&S.lv<=RM[k].l[1]);const o=ks.filter(k=>rep>=RM[k].req);ks=o.length?o:ks.slice(0,1);if(!ks.length)ks=['S'];
+const k=R(ks),r=RM[k],tp=R(['kills','ok','streak','nin',...('BAS'.includes(k)?['boss','boss']:[])]),n=Math.max(tp=='boss'?1:2,Math.round(BS[tp]*r.n));
+return{id:Math.random().toString(36).slice(2),k,tp,n,h:0,ry:Math.round(r.ry*(.8+Math.random()*.4)),xp:Math.round(r.xp*(.8+Math.random()*.4)),v}}
+function board(v){if(!S.bd[v])S.bd[v]=[gen1(v),gen1(v),gen1(v)];return S.bd[v]}
+function mdone(m){const r=RM[m.k];S.ryo+=m.ry;S.rep[m.v]=(S.rep[m.v]||0)+r.rep;S.mc++;S.bd[m.v]=board(m.v).filter(x=>x!==m);S.bd[m.v].push(gen1(m.v));let g='';
+if(S.mc%3==0){const k=R(['rpw','rxp','rry','rtm','rch','pild','ramen','chak','kunai']);S.inv[k]=(S.inv[k]||0)+1;g=' · 🎁 Cofre: '+IT[k].n}
+const t=`📋 ¡Misión ${m.k} cumplida! +${m.ry} ryō · +${m.xp} XP · rep +${r.rep}${g}`;if(B&&!B.done)B.log.push(t);T(t);addXp(m.xp);save()}
+function mp(tp,v){Object.values(S.bd).flat().filter(m=>m.on&&m.tp==tp).forEach(m=>{m.h=tp=='streak'?Math.max(m.h,v):m.h+1;if(m.h>=m.n)mdone(m)});
+const q=S.mm;if(q){const j=J.find(x=>x.id==q.j),m=mqf(j);if(m[0]==tp&&q.h<m[1]){q.h++;if(q.h==m[1])T('🎓 ¡Misión cumplida! Ve a Maestros a aprender '+j.n)}}}
+const AM=()=>{const a=act();return a.length?`<div class="card"><div class="ct">📋 Misiones activas</div>${a.map(m=>`<div class="mu">${m.k} · ${ob(m.tp,m.n)}: <b style="color:#fff">${Math.min(m.h,m.n)}/${m.n}</b></div>`).join('')}</div>`:''};
+function trav(v){S.vil=v;save();render()}
+function acc(v,i){if(act().length>=3)return T('Máximo 3 misiones activas');board(v)[i].on=1;save();render()}
+function aba(v,i){const m=board(v)[i];m.on=0;m.h=0;save();render()}
+function refr(){if(S.ryo<20)return T('Faltan ryō');S.ryo-=20;S.bd[S.vil]=board(S.vil).map(m=>m.on?m:gen1(S.vil));save();render()}
+function map(){const v=VG(S.vil),bd=board(v[0]),rep=S.rep[v[0]]||0;
+$('#v').innerHTML=ph('🗺️ Mapa','Viaja, acepta hasta 3 misiones y cúmplelas mientras estudias: la sesión no termina')+`<div class="g" style="margin-bottom:14px">${V.map(a=>{const lk=S.lv<a[3],h=a[0]==S.vil;return `<div class="card" style="${h?'border-color:var(--or2)':''}"><div style="font-size:34px">${a[2]}</div><div class="ct" style="font-size:10px">${a[1]}</div><div class="mu" style="margin-bottom:8px">Elemento ${EL[a[4]][0]} · Rep. ${S.rep[a[0]]||0}</div><button class="${h?'btn':''}" ${lk?'disabled':''} onclick="trav('${a[0]}')">${lk?'🔒 Nv.'+a[3]:h?'📍 Aquí':'Viajar'}</button></div>`}).join('')}</div>
+<div class="card"><div class="ct">📋 Tablón de ${v[2]} ${v[1]}</div><p class="mu">Reputación <b style="color:#fff">${rep}</b>: rango B desde 3, A desde 8, S desde 15. Los enemigos de aquí usan más ${EL[v[4]][0]}. Cada 3 misiones cumplidas, 🎁 cofre.</p>
+<div class="g" style="margin-top:10px">${bd.map((m,i)=>`<div class="stc"><span class="bdg" style="background:var(--or2);color:#1a1000">RANGO ${m.k}</span> <span class="mu">Nv.${RM[m.k].l[0]}–${RM[m.k].l[1]}</span><div style="margin:8px 0;font-weight:700">${ob(m.tp,m.n)}</div><div class="mu">💰 ${m.ry} ryō · ✨ ${m.xp} XP · 🏅 +${RM[m.k].rep} rep</div>${m.on?`${bar(m.h/m.n*100,'var(--or)')}<div class="mu">${Math.min(m.h,m.n)}/${m.n}</div><button onclick="aba('${v[0]}',${i})">Abandonar</button>`:`<button class="btn" style="margin-top:8px" onclick="acc('${v[0]}',${i})">Aceptar</button>`}</div>`).join('')}</div>
+<button style="margin-top:10px" onclick="refr()">🔄 Actualizar tablón · 20 ryō</button></div>`}
+function maes(){const ok=MST.filter(m=>!m.cl||S.sh.cl.includes(m.cl));
+$('#v').innerHTML=ph('🎓 Maestros','Cada maestro enseña varias técnicas: abre su entrenamiento')+`<div class="g">${ok.map(m=>{const js=J.filter(j=>j.ma==m.id),k=js.filter(j=>S.kn.includes(j.id)).length,mn=Math.min(...js.map(j=>j.r));return `<div class="card"><div style="font-size:34px">${m.e}</div><div class="ct" style="font-size:10px">${esc(m.n)}</div><div class="mu">${TY[m.t]}${m.cl?' · Clan '+CL.find(c=>c[0]==m.cl)[1]:''}</div><div class="mu" style="margin:6px 0 8px">${k}/${js.length} técnicas aprendidas</div><button class="btn" ${S.lv<mn?'disabled':''} onclick="ent('${m.id}')">${S.lv<mn?'🔒 Nv.'+mn:'🏋️ Entrenamiento'}</button></div>`}).join('')}</div><p class="mu" style="margin-top:12px">Los maestros de otros clanes solo enseñan a su propia gente.</p>`}
+function ent(id){const m=MST.find(x=>x.id==id),js=J.filter(j=>j.ma==id).sort((a,b)=>a.r-b.r);
+mo(m.e+' '+esc(m.n),`<p class="mu" style="margin-bottom:10px">Cumple la misión de cada técnica (mientras estudias) y paga para aprenderla. Solo una misión de maestro a la vez.</p>${js.map(j=>{const [tp,n,c]=mqf(j),kn=S.kn.includes(j.id),lk=S.lv<j.r,q=S.mm&&S.mm.j==j.id?S.mm:null,dn=q&&q.h>=n;
+return `<div class="mi" style="margin-bottom:8px"><div class="rg"><b style="flex:1">${esc(j.n)}</b><span class="mu">${TY[j.t]}</span></div><div class="mu">${j.t=='gen'?'Congela '+j.f+'s':'Poder '+j.p}${j.c?' · '+j.c+' chakra':''} · Nv.${j.r}</div>${kn?'<div class="mu">✅ Aprendida</div>':lk?`<div class="mu">🔒 Se desbloquea en el nivel ${j.r}</div>`:`<div class="mu" style="margin:4px 0">🎯 ${ob(tp,n)} · 💰 ${c} ryō</div>${q?`${bar(q.h/n*100,'var(--or)')}<div class="mu">${Math.min(q.h,n)}/${n}</div>${dn?`<button class="btn" ${S.ryo<c?'disabled':''} onclick="lrn('${j.id}','${id}')">Aprender · ${c} ryō</button>`:`<button onclick="S.mm=null;save();render();ent('${id}')">Abandonar</button>`}`:`<button class="btn" ${S.mm?'disabled':''} onclick="S.mm={j:'${j.id}',h:0};save();render();ent('${id}')">Aceptar misión</button>`}`}</div>`}).join('')}`)}
+function lrn(jid,mid){const j=J.find(x=>x.id==jid),[tp,n,c]=mqf(j);if(!S.mm||S.mm.j!=jid||S.mm.h<n||S.ryo<c)return;S.ryo-=c;S.kn.push(jid);if(S.eq.length<6)S.eq.push(jid);S.mm=null;save();T('🎓 ¡Aprendiste '+j.n+'!');render();ent(mid)}
+let pt='n';
+function perf(){$('#v').innerHTML=ph('🥷 Perfil','Gestiona a tu ninja')+`<div class="rg" style="margin-bottom:14px">${[['n','👤 Ninja'],['s','📊 Estadísticas'],['e','🏋️ Entrenamiento']].map(([k,l])=>`<button class="${pt==k?'btn':''}" onclick="pt='${k}';render()">${l}</button>`).join('')}</div>`+({n:pn,s:pst,e:pen})[pt]()}
+function pst(){return `<div class="card"><div class="ct">📊 Estadísticas</div><p class="mu" style="margin-bottom:10px">Puntos disponibles: <b style="color:var(--or2)">${S.sp}</b> (3 por nivel)</p>${[['hp','❤️ Vida','+5 vida máx.'],['ch','🔵 Chakra','+3 chakra máx.'],['nin','🌀 Ninjutsu','+4% de daño'],['tai','👊 Taijutsu','+4% de daño'],['gen','👁️ Genjutsu','+4% de daño y duración']].map(([k,l,d])=>`<div class="row"><span>${l} <span class="mu">${d}</span></span><span><b style="font-size:11px;margin-right:8px">${S.st[k]}</b><button class="btn" ${S.sp?'':'disabled'} onclick="sp_('${k}')">+</button></span></div>`).join('')}</div>`}
+function sp_(k){if(S.sp<1)return;S.sp--;S.st[k]++;save();render()}
+const MXL=5,tcost=(j,l)=>Math.round((60+j.p*3)*l);
+function pen(){return `<div class="card"><div class="ct">🏋️ Entrenamiento</div><p class="mu" style="margin-bottom:8px">Sube el nivel de tus jutsus con ryō (máx. ${MXL}): +12% de poder (o de duración) por nivel.</p>${S.kn.map(id=>J.find(x=>x.id==id)).map(j=>{const l=S.jl[j.id]||1;return `<div class="rg"><span style="flex:1"><b>${j.n}</b> <span class="mu">${TY[j.t]}</span><div class="mu">Nivel ${l}/${MXL}</div></span>${l>=MXL?'<span class="mu">MÁX.</span>':`<button class="btn" ${S.ryo<tcost(j,l)?'disabled':''} onclick="trn('${j.id}')">Subir · ${tcost(j,l)} ryō</button>`}</div>`}).join('')}</div>`}
+function trn(id){const j=J.find(x=>x.id==id),l=S.jl[id]||1;if(l>=MXL||S.ryo<tcost(j,l))return;S.ryo-=tcost(j,l);S.jl[id]=l+1;save();render()}
+function pn(){const b=bo(),lk=J.filter(j=>!S.kn.includes(j.id)&&okj(j));
+return `<div class="two"><div><div class="card"><div class="ct">Ninja</div><div style="font-size:64px;text-align:center">${S.av}</div>
+<label>Nombre</label><input value="${esc(S.name)}" onchange="S.name=this.value.trim()||'Ninja';save()">
+<label>Avatar</label><div class="rg">${['🥷','🦊','🐸','🐍','👁️','🌀','🍃','🔥'].map(a=>`<button onclick="S.av='${a}';save();render()">${a}</button>`).join('')}</div>
+<label>Estadísticas</label>${rw(rk()+' · Nv.'+S.lv,S.xp+'/'+need()+' XP')}${rw('Vida / Chakra',mxHp()+' / '+mxCh())}</div>
+<div class="card"><div class="ct">💾 Partida</div><div class="rg"><button class="btn" onclick="expo()">📤 Exportar</button><input type="file" accept=".json" onchange="impo(this)"></div><p class="mu">Importar sustituye tu partida actual.</p></div></div>
+<div><div class="card"><div class="ct">🧬 Linaje shinobi (fijo)</div>${rasgos()}${rw('Bonus','Vida +'+b.hp+'% · Chakra +'+b.ch+'% · Poder +'+b.pw+'%')}${b.t?rw('Tiempo del rival','+'+b.t+' s'):''}${b.fc?rw('Tolerancia flashcard','+'+b.fc+'%'):''}</div>
+<div class="card"><div class="ct">Jutsus (equipados ${S.eq.length}/6)</div>${S.kn.map(id=>J.find(x=>x.id==id)).map(j=>`<div class="rg"><span style="flex:1"><b>${j.n}</b> ${j.e?EL[j.e][0]:''}<div class="mu">${TY[j.t]} · ${S.u[j.id]||0} usos (+${Math.floor((S.u[j.id]||0)/10)*5}%)</div></span><button class="${S.eq.includes(j.id)?'btn':''}" onclick="tg('${j.id}')">${S.eq.includes(j.id)?'Equipado':'Equipar'}</button></div>`).join('')}${lk.length?`<div class="mu" style="margin-top:8px">Próximos: ${lk.map(j=>j.n+' (Nv.'+j.r+')').join(' · ')}</div>`:''}</div></div></div>`}
+function tg(id){if(S.eq.includes(id)){if(S.eq.length>1)S.eq=S.eq.filter(x=>x!=id)}else if(S.eq.length<6)S.eq.push(id);else T('Máximo 6 jutsus');save();render()}
+function expo(){dlf('narutostudy_'+S.name+'.json',JSON.stringify(S,null,2));T('📤 Partida exportada')}
+function impo(i){const f=i.files[0];if(!f)return;f.text().then(t=>{try{const d=JSON.parse(t);if(!d||typeof d!='object'||!d.lv||!Array.isArray(d.tm))throw 0;S=Object.assign(DEF(),d);save();boot();T('📥 Partida importada')}catch(e){T('Archivo de partida no válido')}})}
+boot();
+</script></body></html>
