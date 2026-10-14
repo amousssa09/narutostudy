@@ -138,7 +138,7 @@ const TPL={nombre:'Mi temario',puntos:[{nombre:'Punto 1',preguntas:[
 const VT=['multiple','vf','rellenar','flashcard','relacionar'];
 
 const K='narutostudy_v2';
-const DEF=()=>({name:'Ninja',av:'🥷',lv:1,xp:0,ryo:100,kn:[],eq:[],u:{},inv:{},tm:[DEMO],ok:0,tot:0,w:0,l:0,sh:null,qm:{},dm:0,sp:0,st:{hp:0,ch:0,nin:0,tai:0,gen:0},jl:{},vil:'konoha',bd:{},rep:{},mc:0,mm:null,ms:[]});let S=DEF(),B=null,TI=null,sec='d',te=null,pre=null;
+const DEF=()=>({name:'Ninja',av:'🥷',lv:1,xp:0,ryo:100,kn:[],eq:[],u:{},inv:{},tm:[DEMO],ok:0,tot:0,w:0,l:0,sh:null,gs:{tk:[],ev:[],nt:[]},qm:{},dm:0,sp:0,st:{hp:0,ch:0,nin:0,tai:0,gen:0},jl:{},vil:'konoha',bd:{},rep:{},mc:0,mm:null,ms:[]});let S=DEF(),B=null,TI=null,sec='d',te=null,pre=null;
 try{Object.assign(S,JSON.parse(localStorage.getItem(K)||'{}'))}catch(e){}
 const save=()=>{try{localStorage.setItem(K,JSON.stringify(S))}catch(e){}};
 function T(m){const t=$('#toast');t.textContent=m;t.style.display='block';clearTimeout(T.t);T.t=setTimeout(()=>t.style.display='none',2600)}
@@ -148,15 +148,15 @@ const hc=p=>p>50?'var(--hp)':p>25?'var(--or2)':'var(--rd)';
 function addXp(n){S.xp+=n;while(S.xp>=need()){S.xp-=need();S.lv++;S.sp+=3;T('🎉 ¡Nivel '+S.lv+'! +3 puntos de estadística')}learn()}
 function dlf(n,t){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([t],{type:'application/json'}));a.download=n;a.click()}
 
-function nav(){$('#co').textContent='💰 '+S.ryo+' ryō';$('#nv').innerHTML=[['d','🏯','Dashboard'],['t','📚','Temarios'],['b','⚔️','Batallar'],['s','🛒','Tienda'],['m','🗺️','Mapa'],['x','🎓','Maestros'],['p','🥷','Perfil']].map(([k,i,l])=>`<button class="ni ${sec==k?'on':''}" onclick="go('${k}')"><span>${i}</span>${l}</button>`).join('')}
+function nav(){$('#co').textContent='💰 '+S.ryo+' ryō';$('#nv').innerHTML=[['d','🏯','Dashboard'],['t','📚','Temarios'],['b','⚔️','Batallar'],['s','🛒','Tienda'],['m','🗺️','Mapa'],['x','🎓','Maestros'],['g','📅','Gestión'],['p','🥷','Perfil']].map(([k,i,l])=>`<button class="ni ${sec==k?'on':''}" onclick="go('${k}')"><span>${i}</span>${l}</button>`).join('')}
 function go(k){if(B&&!B.done&&k!=sec){T('Termina o huye del combate primero');return}if(B&&B.done)B=null;sec=k;te=null;cm();render()}
-function render(){nav();({d:dash,t:tem,b:bat,s:shop,m:map,x:maes,p:perf})[sec]()}
+function render(){nav();({d:dash,t:tem,b:bat,s:shop,m:map,x:maes,g:gest,p:perf})[sec]()}
 const ph=(t,s)=>`<div class="ph"><div><div class="pt">${t}</div><div class="ps">${s||''}</div></div></div>`;
 
 function dash(){const a=S.tot?Math.round(S.ok/S.tot*100):0;
 $('#v').innerHTML=ph('🏯 Dashboard',`Bienvenido, ${esc(S.name)} · ${rk()}`)+`<div class="sg">${[['Nivel',S.lv],['Rango',rk()],['Ryō',S.ryo],['Victorias',S.w],['Derrotas',S.l],['Aciertos',a+'%'],['Dominadas',S.dm||0],['En repaso',Object.keys(S.qm||{}).length]].map(([l,v])=>`<div class="stc"><div class="sv">${v}</div><div class="sl">${l}</div></div>`).join('')}</div>
 <div class="card"><div class="ct">✨ Experiencia</div><div class="mu">${S.xp}/${need()} XP para el nivel ${S.lv+1}</div>${bar(S.xp/need()*100,'var(--or)')}<button class="btn" style="margin-top:8px" onclick="go('b')">⚔️ ¡A Batallar!</button></div>
-<div class="card"><div class="ct">📄 Plantilla JSON de temario</div><pre>${esc(JSON.stringify(TPL,null,2))}</pre><button onclick="cp()">📋 Copiar</button> <button onclick="dlf('plantilla_temario.json',JSON.stringify(TPL,null,2))">⬇️ Descargar</button></div>`}
+${gdash()}<div class="card"><div class="ct">📄 Plantilla JSON de temario</div><pre>${esc(JSON.stringify(TPL,null,2))}</pre><button onclick="cp()">📋 Copiar</button> <button onclick="dlf('plantilla_temario.json',JSON.stringify(TPL,null,2))">⬇️ Descargar</button></div>`}
 function cp(){const t=JSON.stringify(TPL,null,2);navigator.clipboard.writeText(t).then(()=>T('Plantilla copiada'),()=>T('No se pudo copiar'))}
 
 function mo(t,h,w){$('#mo').innerHTML=`<div class="ov" onclick="if(event.target==this)cm()"><div class="md" style="${w||''}"><div class="mh"><div class="ct" style="margin:0">${t}</div><button onclick="cm()">✖</button></div>${h}</div></div>`}
@@ -329,6 +329,34 @@ function ent(id){const m=MST.find(x=>x.id==id),js=J.filter(j=>j.ma==id).sort((a,
 mo(m.e+' '+esc(m.n),`<p class="mu" style="margin-bottom:10px">Cumple la misión de cada técnica (mientras estudias) y paga para aprenderla. Solo una misión de maestro a la vez.</p>${js.map(j=>{const [tp,n,c]=mqf(j),kn=S.kn.includes(j.id),lk=S.lv<j.r,q=S.mm&&S.mm.j==j.id?S.mm:null,dn=q&&q.h>=n;
 return `<div class="mi" style="margin-bottom:8px"><div class="rg"><b style="flex:1">${esc(j.n)}</b><span class="mu">${TY[j.t]}</span></div><div class="mu">${j.t=='gen'?'Congela '+j.f+'s':'Poder '+j.p}${j.c?' · '+j.c+' chakra':''} · Nv.${j.r}</div>${kn?'<div class="mu">✅ Aprendida</div>':lk?`<div class="mu">🔒 Se desbloquea en el nivel ${j.r}</div>`:`<div class="mu" style="margin:4px 0">🎯 ${ob(tp,n)} · 💰 ${c} ryō</div>${q?`${bar(q.h/n*100,'var(--or)')}<div class="mu">${Math.min(q.h,n)}/${n}</div>${dn?`<button class="btn" ${S.ryo<c?'disabled':''} onclick="lrn('${j.id}','${id}')">Aprender · ${c} ryō</button>`:`<button onclick="S.mm=null;save();render();ent('${id}')">Abandonar</button>`}`:`<button class="btn" ${S.mm?'disabled':''} onclick="S.mm={j:'${j.id}',h:0};save();render();ent('${id}')">Aceptar misión</button>`}`}</div>`}).join('')}`)}
 function lrn(jid,mid){const j=J.find(x=>x.id==jid),[tp,n,c]=mqf(j);if(!S.mm||S.mm.j!=jid||S.mm.h<n||S.ryo<c)return;S.ryo-=c;S.kn.push(jid);if(S.eq.length<6)S.eq.push(jid);S.mm=null;save();T('🎓 ¡Aprendiste '+j.n+'!');render();ent(mid)}
+// ===== Gestión (tareas, fechas, notas) =====
+const dl_=d=>Math.round((new Date(d+'T00:00')-new Date(new Date().toDateString()))/864e5),
+dtx=n=>n<0?'pasó hace '+-n+' d':n==0?'¡HOY!':n==1?'mañana':'en '+n+' días',
+dcl=n=>n<=3?'var(--rd)':n<=7?'var(--or)':'var(--mu)',
+fd=d=>new Date(d+'T00:00').toLocaleDateString('es-ES',{weekday:'short',day:'numeric',month:'short'}),
+EK={examen:'📝',proyecto:'🧩',entrega:'📦',otro:'📌'},
+evs=()=>S.gs.ev.map((e,i)=>({...e,i,n:dl_(e.d)})).sort((a,b)=>a.d<b.d?-1:1),
+tks=()=>S.gs.tk.map((t,i)=>({...t,i,n:t.d?dl_(t.d):null})).sort((a,b)=>(a.x-b.x)||((a.d||'9')<(b.d||'9')?-1:1));
+function gdash(){const ev=evs().filter(e=>e.n>=0).slice(0,4),tk=tks().filter(t=>!t.x).slice(0,4),nt=S.gs.nt.filter(n=>n.r&&dl_(n.r)<=7);
+if(!ev.length&&!tk.length&&!nt.length)return '';
+return `<div class="card"><div class="ct">📅 Tu semana</div>${ev.map(e=>`<div class="rg">${EK[e.k]} <b>${esc(e.t)}</b> <span style="color:${dcl(e.n)};font-weight:700">${dtx(e.n)}</span> <span class="mu">${fd(e.d)}</span></div>`).join('')}${tk.map(t=>`<div class="rg">${t.k=='proyecto'?'🧩':'📚'} ${esc(t.t)}${t.d?` <span style="color:${dcl(t.n)};font-weight:700">${dtx(t.n)}</span>`:''}</div>`).join('')}${nt.map(n=>`<div class="rg">⏰ ${esc(n.t)} <span style="color:${dcl(dl_(n.r))};font-weight:700">${dtx(dl_(n.r))}</span></div>`).join('')}<button style="margin-top:6px" onclick="go('g')">Abrir Gestión →</button></div>`}
+function gest(){const ev=evs(),tk=tks(),nt=S.gs.nt.map((n,i)=>({...n,i}));
+$('#v').innerHTML=`<div class="ph"><div><div class="pt">📅 Gestión</div><div class="ps">Tus tareas, fechas y notas (fuera del juego)</div></div><div class="rg"><button onclick="mEv()">+ Fecha</button><button onclick="mTk()">+ Tarea</button><button class="btn" onclick="mNt()">+ Nota</button></div></div>
+<div class="two"><div><div class="card"><div class="ct">📌 Fechas importantes</div>${ev.map(e=>`<div class="rg"><span style="flex:1">${EK[e.k]} <b>${esc(e.t)}</b><div class="mu">${fd(e.d)} · <span style="color:${dcl(e.n)};font-weight:700">${dtx(e.n)}</span></div></span><button onclick="dEv(${e.i})">🗑️</button></div>`).join('')||'<p class="mu">Sin fechas. Añade un examen o una entrega.</p>'}</div>
+<div class="card"><div class="ct">📝 Notas y recordatorios</div>${nt.map(n=>`<div class="mi" style="margin-bottom:8px"><div class="rg"><b style="flex:1">${esc(n.t)}</b><button onclick="dNt(${n.i})">🗑️</button></div><div class="mu" style="white-space:pre-wrap">${esc(n.c)}</div>${n.r?`<div class="mu" style="margin-top:4px;color:${dcl(dl_(n.r))}">⏰ ${fd(n.r)} · ${dtx(dl_(n.r))}</div>`:''}</div>`).join('')||'<p class="mu">Sin notas.</p>'}</div></div>
+<div class="card"><div class="ct">✅ Tareas</div>${tk.map(t=>`<div class="rg"><input type="checkbox" style="width:auto" ${t.x?'checked':''} onchange="ttk(${t.i})"><span style="flex:1;${t.x?'opacity:.5;text-decoration:line-through':''}">${t.k=='proyecto'?'🧩':'📚'} <b>${esc(t.t)}</b><div class="mu">${t.k=='proyecto'?'Proyecto':'Clase'}${t.d?` · <span style="color:${t.x?'var(--mu)':dcl(t.n)}">${dtx(t.n)}</span>`:''}</div></span><button onclick="dTk(${t.i})">🗑️</button></div>`).join('')||'<p class="mu">Sin tareas.</p>'}${S.gs.tk.some(t=>t.x)?'<button style="margin-top:8px" onclick="clrTk()">Limpiar hechas</button>':''}</div></div>`}
+const gw='width:min(460px,100%)',gv=()=>[$('#gt').value.trim(),$('#gk')&&$('#gk').value,$('#gd').value],gsv=()=>{save();cm();render()};
+function mTk(){mo('✅ Nueva tarea',`<label>Título</label><input id="gt"><label>Tipo</label><select id="gk"><option value="clase">📚 Clase</option><option value="proyecto">🧩 Proyecto</option></select><label>Fecha límite (opcional)</label><input id="gd" type="date"><button class="btn big" onclick="aTk()">Añadir</button>`,gw)}
+function mEv(){mo('📌 Nueva fecha',`<label>Título</label><input id="gt"><label>Tipo</label><select id="gk">${Object.keys(EK).map(k=>`<option value="${k}">${EK[k]} ${k[0].toUpperCase()+k.slice(1)}</option>`).join('')}</select><label>Fecha</label><input id="gd" type="date"><button class="btn big" onclick="aEv()">Añadir</button>`,gw)}
+function mNt(){mo('📝 Nueva nota',`<label>Título</label><input id="gt"><label>Nota</label><textarea id="gc" rows="4"></textarea><label>Recordatorio (opcional)</label><input id="gd" type="date"><button class="btn big" onclick="aNt()">Guardar</button>`,gw)}
+function aTk(){const[t,k,d]=gv();if(!t)return T('Pon un título');S.gs.tk.push({t,k,d,x:0});gsv()}
+function aEv(){const[t,k,d]=gv();if(!t||!d)return T('Pon título y fecha');S.gs.ev.push({t,k,d});gsv()}
+function aNt(){const[t,,d]=gv();if(!t)return T('Pon un título');S.gs.nt.push({t,c:$('#gc').value,r:d});gsv()}
+function dTk(i){S.gs.tk.splice(i,1);gsv()}
+function dEv(i){S.gs.ev.splice(i,1);gsv()}
+function dNt(i){S.gs.nt.splice(i,1);gsv()}
+function ttk(i){S.gs.tk[i].x=S.gs.tk[i].x?0:1;save();render()}
+function clrTk(){S.gs.tk=S.gs.tk.filter(t=>!t.x);save();render()}
 let pt='n';
 function perf(){$('#v').innerHTML=ph('🥷 Perfil','Gestiona a tu ninja')+`<div class="rg" style="margin-bottom:14px">${[['n','👤 Ninja'],['s','📊 Estadísticas'],['e','🏋️ Entrenamiento']].map(([k,l])=>`<button class="${pt==k?'btn':''}" onclick="pt='${k}';render()">${l}</button>`).join('')}</div>`+({n:pn,s:pst,e:pen})[pt]()}
 function pst(){return `<div class="card"><div class="ct">📊 Estadísticas</div><p class="mu" style="margin-bottom:10px">Puntos disponibles: <b style="color:var(--or2)">${S.sp}</b> (3 por nivel)</p>${[['hp','❤️ Vida','+5 vida máx.'],['ch','🔵 Chakra','+3 chakra máx.'],['nin','🌀 Ninjutsu','+4% de daño'],['tai','👊 Taijutsu','+4% de daño'],['gen','👁️ Genjutsu','+4% de daño y duración']].map(([k,l,d])=>`<div class="row"><span>${l} <span class="mu">${d}</span></span><span><b style="font-size:11px;margin-right:8px">${S.st[k]}</b><button class="btn" ${S.sp?'':'disabled'} onclick="sp_('${k}')">+</button></span></div>`).join('')}</div>`}
