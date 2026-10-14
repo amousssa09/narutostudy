@@ -207,24 +207,24 @@ if(b.fz>0)b.fz--;else b.sec--;
 if(b.sec<=0){b.log.push(`😤 ¡${b.e.n} atacó sin esperar!`);return eat()}
 rt()}
 function rt(){const b=B,x=$('#rt');if(!x||!b)return;const p=b.sec/b.d[0]*100;
-x.innerHTML=`<span>😤 RIVAL</span>${bar(p,hc(p))}<span>${b.fz>0?'❄️'+b.fz:b.sec+'s'}</span>${b.cd=='t'?`<span>⏱️ ${Math.max(0,(b.end-Date.now())/6e4).toFixed(1)}m</span>`:''}`}
+x.innerHTML=`<span>😤 RIVAL</span>${bar(p,hc(p))}<span>${b.pz?'⏸️':b.fz>0?'❄️'+b.fz:b.sec+'s'}</span>${b.cd=='t'?`<span>⏱️ ${Math.max(0,(b.end-Date.now())/6e4).toFixed(1)}m</span>`:''}`}
 function nxt(){const b=B;if(b.cd=='t'&&Date.now()>=b.end)return fin(1,'¡Tiempo de estudio completado!');if(b.cd=='r'&&b.qi>=b.qs.length*b.am)return fin(1,'¡Rondas completadas!');b.res=null;b.ph='menu';b.sec=b.d[0];render()}
 function eat(){const b=B,e=b.e,dm=Math.max(1,Math.round(e.a*b.d[1]*(.85+Math.random()*.3)));b.hp-=dm;b.fz=0;b.log.push(`⚡ ${e.n} te golpea → ${dm} dmg`);
 if(b.hp<=0){b.hp=0;b.log.push('💀 ¡Has caído!');return fin(0,'Te has quedado sin vida.')}
 nxt()}
 const TQ={multiple:'🔤 Elige la respuesta',vf:'✅ Verdadero o falso',rellenar:'✏️ Rellena los huecos',flashcard:'🃏 Flashcard',relacionar:'🔗 Relaciona'};
 function pick(id){const b=B,j=J.find(x=>x.id==id);if(b.ph!='menu')return;if(b.ch<cc(j))return T('Chakra insuficiente: usa Sellos de Chakra o el Inventario');
-b.j=j;b.q=b.qs[b.qi%b.qs.length];b.fl=0;b.pz=0;b.pct=null;b.rs=b.q.tipo=='relacionar'?sh(b.q.pares.map(p=>p.der)):0;b.ph='q';render()}
+b.j=j;b.q=b.qs[b.qi%b.qs.length];b.fl=0;b.pz=(b.q.tipo=='flashcard'||b.q.tipo=='relacionar')?1:0;b.pct=null;b.rs=b.q.tipo=='relacionar'?sh(b.q.pares.map(p=>p.der)):0;b.ph='q';render()}
 function qh(){const b=B,q=b.q,t=q.tipo;let h=`<div class="ct">${TQ[t]}</div><div class="mu" style="margin-bottom:8px">${TY[b.j.t]} · ${esc(b.j.n)}</div>`;
 if(t=='multiple')h+=`<h3>${esc(q.pregunta)}</h3>`+q.opciones.map((o,i)=>`<button class="o" onclick="ans(${i==q.correcta})">${esc(o)}</button>`).join('');
 else if(t=='vf')h+=`<h3>${esc(q.pregunta)}</h3><button class="o" onclick="ans(${q.respuesta===true})">✅ Verdadero</button><button class="o" onclick="ans(${q.respuesta===false})">❌ Falso</button>`;
 else if(t=='rellenar')h+=`<p style="font-weight:700;font-size:16px;line-height:2">${esc(q.texto).split('___').map((s,i,a)=>s+(i<a.length-1?'<input class="bl" onkeydown="if(event.key==\'Enter\')chk()">':'')).join('')}</p><button class="btn big" onclick="chk()">Comprobar →</button>`;
 else if(t=='flashcard'){h+=`<h3>${esc(q.frente||q.pregunta)}</h3>`;
 if(!b.fl)h+=`<button class="btn big" onclick="fcShow()">Ver dorso</button>`;
-else if(b.fl==1)h+=`<div class="an" style="background:var(--c2);border-radius:10px;padding:12px;font-weight:700">${esc(q.dorso||q.respuesta)}</div><div class="mu">🧠 Memoriza... <b id="fcs">5</b>s (el rival espera)</div><div class="bar"><i id="fcb" style="width:100%;transition:width 5s linear"></i></div>`;
+else if(b.fl==1)h+=`<div class="an" style="background:var(--c2);border-radius:10px;padding:12px;font-weight:700">${esc(q.dorso||q.respuesta)}</div><div class="mu" style="margin:8px 0">🧠 Memorízalo sin prisa.</div><button class="btn big" onclick="B.fl=2;render()">Ya lo memoricé →</button>`;
 else h+=`<div class="ct" style="margin-top:6px">✏️ ¡Escribe la respuesta!</div><textarea id="fa" rows="3" placeholder="Con tus palabras: vale si usas los conceptos clave"></textarea><button class="btn big" onclick="fcChk()">Comprobar →</button>`}
 else h+=`<h3>${esc(q.pregunta||'Relaciona')}</h3>`+q.pares.map(p=>`<div class="rg"><b>${esc(p.izq)}</b> → <select class="rl"><option value="">…</option>${b.rs.map(r=>`<option>${esc(r)}</option>`).join('')}</select></div>`).join('')+`<button class="btn big" onclick="chk()">Comprobar →</button>`;
-return h}
+return h+(t=='flashcard'||t=='relacionar'?'<div class="mu" style="margin-top:10px">⏸️ Sin límite de tiempo: el rival espera.</div>':'')}
 function chk(){const q=B.q;let ok;
 if(q.tipo=='rellenar'){const v=[...document.querySelectorAll('.bl')].map(i=>nz(i.value));ok=q.respuestas.every((r,i)=>v[i]==nz(r))}
 else{const v=[...document.querySelectorAll('.rl')].map(s=>s.value);ok=q.pares.every((p,i)=>v[i]==p.der)}
@@ -235,10 +235,9 @@ const nt=s=>nz(s).replace(/[^a-z0-9\s]/g,' ').replace(/\s+/g,' ').trim();
 const near=(a,b)=>{if(a==b)return 1;if(a.length<5||Math.abs(a.length-b.length)>1)return 0;let i=0;while(i<a.length&&a[i]==b[i])i++;return a.slice(i+1)==b.slice(i+1)||a.slice(i)==b.slice(i+1)||a.slice(i+1)==b.slice(i)};
 function sim(a,r){a=nt(a);r=nt(r);if(!a)return 0;if(a==r)return 1;const aw=a.split(' ');let k=r.split(' ').filter(w=>w.length>=4&&!SW.has(w));if(!k.length)k=r.split(' ');
 return k.filter(w=>{const st=w.slice(0,Math.max(4,w.length-2));return aw.some(x=>near(x,w)||(w.length>=5&&x.length>=4&&x.startsWith(st)))}).length/k.length}
-function fcShow(){const b=B;b.fl=1;b.pz=1;render();requestAnimationFrame(()=>{const x=$('#fcb');if(x)x.style.width='0%'});let n=5;
-const iv=setInterval(()=>{if(B!==b||b.ph!='q'||b.fl!=1){clearInterval(iv);b.pz=0;return}n--;const e=$('#fcs');if(e)e.textContent=n;if(n<=0){clearInterval(iv);b.fl=2;b.pz=0;render()}},1000)}
+function fcShow(){B.fl=1;render()}
 function fcChk(){const q=B.q,s=sim($('#fa').value,q.dorso||q.respuesta||''),p=Math.round(s*100);B.pct=p;ans(s>=FC-bo().fc/100)}
-function ans(ok){const b=B;if(b.ph!='q')return;const j=b.j,q=b.q;b.qi++;b.tot++;S.tot++;const pc=b.pct;b.pct=null;
+function ans(ok){const b=B;if(b.ph!='q')return;const j=b.j,q=b.q;b.qi++;b.tot++;S.tot++;const pc=b.pct;b.pct=null;b.pz=0;
 if(!ok){b.combo=0;b.res={ok:0,sol:sol(q),n:pc};b.log.push(`❌ Incorrecto: ${j.n} falla. Resp: ${sol(q)}`,`😤 ¡${b.e.n} ataca!`);b.ph='res';save();render();setTimeout(()=>{if(B===b&&!b.done)eat()},2500);return}
 b.ok++;S.ok++;b.combo++;S.ryo+=10;S.u[j.id]=(S.u[j.id]||0)+1;b.ch-=cc(j);mp('ok');if(j.t=='nin')mp('nin');mp('streak',b.combo);
 let d=0,x='',m=mast(j.id)*lm()*(1+(S.st[j.t]||0)*.04)*(1+((S.jl[j.id]||1)-1)*.12)*(b.bs.rpw?1.25:1)*(.9+Math.random()*.2);
