@@ -138,7 +138,7 @@ const TPL={nombre:'Mi temario',puntos:[{nombre:'Punto 1',preguntas:[
 const VT=['multiple','vf','rellenar','flashcard','relacionar'];
 
 const K='narutostudy_v2';
-const DEF=()=>({name:'Ninja',av:'🥷',lv:1,xp:0,ryo:100,kn:[],eq:[],u:{},inv:{},tm:[DEMO],ok:0,tot:0,w:0,l:0,sh:null,sp:0,st:{hp:0,ch:0,nin:0,tai:0,gen:0},jl:{},vil:'konoha',bd:{},rep:{},mc:0,mm:null,ms:[]});let S=DEF(),B=null,TI=null,sec='d',te=null,pre=null;
+const DEF=()=>({name:'Ninja',av:'🥷',lv:1,xp:0,ryo:100,kn:[],eq:[],u:{},inv:{},tm:[DEMO],ok:0,tot:0,w:0,l:0,sh:null,qm:{},dm:0,sp:0,st:{hp:0,ch:0,nin:0,tai:0,gen:0},jl:{},vil:'konoha',bd:{},rep:{},mc:0,mm:null,ms:[]});let S=DEF(),B=null,TI=null,sec='d',te=null,pre=null;
 try{Object.assign(S,JSON.parse(localStorage.getItem(K)||'{}'))}catch(e){}
 const save=()=>{try{localStorage.setItem(K,JSON.stringify(S))}catch(e){}};
 function T(m){const t=$('#toast');t.textContent=m;t.style.display='block';clearTimeout(T.t);T.t=setTimeout(()=>t.style.display='none',2600)}
@@ -154,7 +154,7 @@ function render(){nav();({d:dash,t:tem,b:bat,s:shop,m:map,x:maes,p:perf})[sec]()
 const ph=(t,s)=>`<div class="ph"><div><div class="pt">${t}</div><div class="ps">${s||''}</div></div></div>`;
 
 function dash(){const a=S.tot?Math.round(S.ok/S.tot*100):0;
-$('#v').innerHTML=ph('🏯 Dashboard',`Bienvenido, ${esc(S.name)} · ${rk()}`)+`<div class="sg">${[['Nivel',S.lv],['Rango',rk()],['Ryō',S.ryo],['Victorias',S.w],['Derrotas',S.l],['Aciertos',a+'%']].map(([l,v])=>`<div class="stc"><div class="sv">${v}</div><div class="sl">${l}</div></div>`).join('')}</div>
+$('#v').innerHTML=ph('🏯 Dashboard',`Bienvenido, ${esc(S.name)} · ${rk()}`)+`<div class="sg">${[['Nivel',S.lv],['Rango',rk()],['Ryō',S.ryo],['Victorias',S.w],['Derrotas',S.l],['Aciertos',a+'%'],['Dominadas',S.dm||0],['En repaso',Object.keys(S.qm||{}).length]].map(([l,v])=>`<div class="stc"><div class="sv">${v}</div><div class="sl">${l}</div></div>`).join('')}</div>
 <div class="card"><div class="ct">✨ Experiencia</div><div class="mu">${S.xp}/${need()} XP para el nivel ${S.lv+1}</div>${bar(S.xp/need()*100,'var(--or)')}<button class="btn" style="margin-top:8px" onclick="go('b')">⚔️ ¡A Batallar!</button></div>
 <div class="card"><div class="ct">📄 Plantilla JSON de temario</div><pre>${esc(JSON.stringify(TPL,null,2))}</pre><button onclick="cp()">📋 Copiar</button> <button onclick="dlf('plantilla_temario.json',JSON.stringify(TPL,null,2))">⬇️ Descargar</button></div>`}
 function cp(){const t=JSON.stringify(TPL,null,2);navigator.clipboard.writeText(t).then(()=>T('Plantilla copiada'),()=>T('No se pudo copiar'))}
@@ -197,25 +197,25 @@ function start(){const t=S.tm[$('#ts').value];if(!t)return T('Necesitas un temar
 let ix=$('#pp').value.split(/[\s,]+/).map(Number).filter(n=>n>=1&&n<=t.puntos.length).map(n=>n-1);if(!ix.length)ix=t.puntos.map((_,k)=>k);
 const qs=ix.flatMap(k=>sh([...t.puntos[k].preguntas]));if(!qs.length)return T('Esos puntos no tienen preguntas');
 const cd=$('#cd').value,am=Math.max(1,+$('#am').value||1);
-B={qs,qi:0,bs:{},d:[D[$('#df').value][0]+bo().t,D[$('#df').value][1]],hp:mxHp(),ch:mxCh(),combo:0,ok:0,tot:0,kills:0,gr:0,gx:0,log:['¡Ve '+S.name+'!'],cd,am,end:cd=='t'?Date.now()+am*6e4:0};
-spawn();render();clearInterval(TI);TI=setInterval(tick,1000)}
-function spawn(){const b=B,mx=Math.min(E.length-1,2+(S.lv/3|0)),e=E[Math.max(0,mx-(Math.random()*4|0))],lv=Math.max(1,S.lv+(Math.random()*3|0)-1),hp=Math.round(e.h*(1+lv*.12));
-b.e={...e,lv,hp,mx:hp,a:e.a*(1+lv*.08)};if(Math.random()<.6)b.e.e=VG(S.vil)[4];b.sec=b.d[0];b.fz=0;b.ph='menu';b.log.push(`✨ ¡${e.n} Nv.${lv} apareció!`)}
+B={qs,qi:0,si:0,rq:[],df:1,hs:[],bs:{},d:[D[$('#df').value][0]+bo().t,D[$('#df').value][1]],hp:mxHp(),ch:mxCh(),combo:0,ok:0,tot:0,kills:0,gr:0,gx:0,log:['¡Ve '+S.name+'!'],cd,am,end:cd=='t'?Date.now()+am*6e4:0};
+B.rq=qs.filter(q=>S.qm[qk(q)]).slice(0,5).map((q,i)=>({q,due:3+i*2}));spawn();render();clearInterval(TI);TI=setInterval(tick,1000)}
+function spawn(){const b=B,mx=Math.min(E.length-1,2+(S.lv/3|0)),e=E[Math.max(0,mx-(Math.random()*4|0))],lv=Math.max(1,S.lv+(Math.random()*3|0)-1),hp=Math.round(e.h*(1+lv*.12)*Math.sqrt(b.df));
+b.e={...e,lv,hp,mx:hp,a:e.a*(1+lv*.08)};if(Math.random()<.6)b.e.e=VG(S.vil)[4];b.sec=ts();b.fz=0;b.ph='menu';b.log.push(`✨ ¡${e.n} Nv.${lv} apareció!`)}
 function tick(){const b=B;if(!b||b.done||b.ph=='res'||b.pz)return;
 if(b.cd=='t'&&Date.now()>=b.end)return fin(1,'¡Tiempo de estudio completado!');
 if(b.fz>0)b.fz--;else b.sec--;
-if(b.sec<=0){b.log.push(`😤 ¡${b.e.n} atacó sin esperar!`);return eat()}
+if(b.sec<=0){b.log.push(`😤 ¡${b.e.n} atacó sin esperar!`);if(b.ph=='q'&&b.q)miss(b.q);return eat()}
 rt()}
-function rt(){const b=B,x=$('#rt');if(!x||!b)return;const p=b.sec/b.d[0]*100;
+function rt(){const b=B,x=$('#rt');if(!x||!b)return;const p=b.sec/ts()*100;
 x.innerHTML=`<span>😤 RIVAL</span>${bar(p,hc(p))}<span>${b.pz?'⏸️':b.fz>0?'❄️'+b.fz:b.sec+'s'}</span>${b.cd=='t'?`<span>⏱️ ${Math.max(0,(b.end-Date.now())/6e4).toFixed(1)}m</span>`:''}`}
-function nxt(){const b=B;if(b.cd=='t'&&Date.now()>=b.end)return fin(1,'¡Tiempo de estudio completado!');if(b.cd=='r'&&b.qi>=b.qs.length*b.am)return fin(1,'¡Rondas completadas!');b.res=null;b.ph='menu';b.sec=b.d[0];render()}
-function eat(){const b=B,e=b.e,dm=Math.max(1,Math.round(e.a*b.d[1]*(.85+Math.random()*.3)));b.hp-=dm;b.fz=0;b.log.push(`⚡ ${e.n} te golpea → ${dm} dmg`);
+function nxt(){const b=B;if(b.cd=='t'&&Date.now()>=b.end)return fin(1,'¡Tiempo de estudio completado!');if(b.cd=='r'&&b.si>=b.qs.length*b.am&&!b.rq.length)return fin(1,'¡Rondas completadas!');b.res=null;b.ph='menu';b.sec=ts();render()}
+function eat(){const b=B,e=b.e,dm=Math.max(1,Math.round(e.a*b.d[1]*b.df*(.85+Math.random()*.3)));b.hp-=dm;b.fz=0;b.log.push(`⚡ ${e.n} te golpea → ${dm} dmg`);
 if(b.hp<=0){b.hp=0;b.log.push('💀 ¡Has caído!');return fin(0,'Te has quedado sin vida.')}
 nxt()}
 const TQ={multiple:'🔤 Elige la respuesta',vf:'✅ Verdadero o falso',rellenar:'✏️ Rellena los huecos',flashcard:'🃏 Flashcard',relacionar:'🔗 Relaciona'};
 function pick(id){const b=B,j=J.find(x=>x.id==id);if(b.ph!='menu')return;if(b.ch<cc(j))return T('Chakra insuficiente: usa Sellos de Chakra o el Inventario');
-b.j=j;b.q=b.qs[b.qi%b.qs.length];b.fl=0;b.pz=(b.q.tipo=='flashcard'||b.q.tipo=='relacionar')?1:0;b.pct=null;b.rs=b.q.tipo=='relacionar'?sh(b.q.pares.map(p=>p.der)):0;b.ph='q';render()}
-function qh(){const b=B,q=b.q,t=q.tipo;let h=`<div class="ct">${TQ[t]}</div><div class="mu" style="margin-bottom:8px">${TY[b.j.t]} · ${esc(b.j.n)}</div>`;
+b.j=j;b.q=nextQ();b.t0=Date.now();b.fl=0;b.pz=(b.q.tipo=='flashcard'||b.q.tipo=='relacionar')?1:0;b.pct=null;b.rs=b.q.tipo=='relacionar'?sh(b.q.pares.map(p=>p.der)):0;b.ph='q';render()}
+function qh(){const b=B,q=b.q,t=q.tipo;let h=`<div class="ct">${b.re?'🔁 Repaso · ':''}${TQ[t]}</div><div class="mu" style="margin-bottom:8px">${TY[b.j.t]} · ${esc(b.j.n)}</div>`;
 if(t=='multiple')h+=`<h3>${esc(q.pregunta)}</h3>`+q.opciones.map((o,i)=>`<button class="o" onclick="ans(${i==q.correcta})">${esc(o)}</button>`).join('');
 else if(t=='vf')h+=`<h3>${esc(q.pregunta)}</h3><button class="o" onclick="ans(${q.respuesta===true})">✅ Verdadero</button><button class="o" onclick="ans(${q.respuesta===false})">❌ Falso</button>`;
 else if(t=='rellenar')h+=`<p style="font-weight:700;font-size:16px;line-height:2">${esc(q.texto).split('___').map((s,i,a)=>s+(i<a.length-1?'<input class="bl" onkeydown="if(event.key==\'Enter\')chk()">':'')).join('')}</p><button class="btn big" onclick="chk()">Comprobar →</button>`;
@@ -225,6 +225,14 @@ else if(b.fl==1)h+=`<div class="an" style="background:var(--c2);border-radius:10
 else h+=`<div class="ct" style="margin-top:6px">✏️ ¡Escribe la respuesta!</div><textarea id="fa" rows="3" placeholder="Con tus palabras: vale si usas los conceptos clave"></textarea><button class="btn big" onclick="fcChk()">Comprobar →</button>`}
 else h+=`<h3>${esc(q.pregunta||'Relaciona')}</h3>`+q.pares.map(p=>`<div class="rg"><b>${esc(p.izq)}</b> → <select class="rl"><option value="">…</option>${b.rs.map(r=>`<option>${esc(r)}</option>`).join('')}</select></div>`).join('')+`<button class="btn big" onclick="chk()">Comprobar →</button>`;
 return h+(t=='flashcard'||t=='relacionar'?'<div class="mu" style="margin-top:10px">⏸️ Sin límite de tiempo: el rival espera.</div>':'')}
+const qk=q=>nz(q.pregunta||q.texto||q.frente||'').slice(0,90),ts=()=>Math.max(4,Math.round(B.d[0]/B.df));
+function nextQ(){const b=B;let i=b.rq.findIndex(r=>r.due<=b.qi);if(i<0&&b.cd=='r'&&b.rq.length&&b.si>=b.qs.length*b.am)i=0;b.re=i>=0;if(i>=0)return b.rq.splice(i,1)[0].q;const q=b.qs[b.si%b.qs.length];b.si++;return q}
+function miss(q){S.qm[qk(q)]={m:0};B.rq.push({q,due:B.qi+2})}
+function rev(ok,q){const b=B,k=qk(q);if(!ok)return miss(q);const r=S.qm[k];if(!r)return;r.m++;if(r.m>=3){delete S.qm[k];S.dm++;b.log.push('🏅 ¡Pregunta dominada!')}else b.rq.push({q,due:b.qi+3+r.m})}
+function adapt(ok,dt){const b=B,o=b.df;b.hs.push([ok,dt==null||dt<b.d[0]*.5]);b.hs=b.hs.slice(-8);if(b.hs.length<4)return;
+const g=b.hs.filter(x=>x[0]),a=g.length/b.hs.length,f=g.filter(x=>x[1]).length/Math.max(1,g.length);
+if(a>=.85&&f>=.5)b.df=Math.min(1.5,o+.1);else if(a<.5)b.df=Math.max(.7,o-.12);else if(a<.7)b.df=Math.max(.7,o-.04);
+if(Math.round(b.df*10)>Math.round(o*10))b.log.push('🔥 Vas sobrado: los rivales se endurecen');else if(Math.round(b.df*10)<Math.round(o*10))b.log.push('🛡️ Reto ajustado: rivales más equilibrados')}
 function chk(){const q=B.q;let ok;
 if(q.tipo=='rellenar'){const v=[...document.querySelectorAll('.bl')].map(i=>nz(i.value));ok=q.respuestas.every((r,i)=>v[i]==nz(r))}
 else{const v=[...document.querySelectorAll('.rl')].map(s=>s.value);ok=q.pares.every((p,i)=>v[i]==p.der)}
@@ -237,7 +245,7 @@ function sim(a,r){a=nt(a);r=nt(r);if(!a)return 0;if(a==r)return 1;const aw=a.spl
 return k.filter(w=>{const st=w.slice(0,Math.max(4,w.length-2));return aw.some(x=>near(x,w)||(w.length>=5&&x.length>=4&&x.startsWith(st)))}).length/k.length}
 function fcShow(){B.fl=1;render()}
 function fcChk(){const q=B.q,s=sim($('#fa').value,q.dorso||q.respuesta||''),p=Math.round(s*100);B.pct=p;ans(s>=FC-bo().fc/100)}
-function ans(ok){const b=B;if(b.ph!='q')return;const j=b.j,q=b.q;b.qi++;b.tot++;S.tot++;const pc=b.pct;b.pct=null;b.pz=0;
+function ans(ok){const b=B;if(b.ph!='q')return;const j=b.j,q=b.q;b.qi++;b.tot++;S.tot++;const pc=b.pct;b.pct=null;b.pz=0;adapt(ok,['multiple','vf','rellenar'].includes(q.tipo)?(Date.now()-b.t0)/1000:null);rev(ok,q);
 if(!ok){b.combo=0;b.res={ok:0,sol:sol(q),n:pc};b.log.push(`❌ Incorrecto: ${j.n} falla. Resp: ${sol(q)}`,`😤 ¡${b.e.n} ataca!`);b.ph='res';save();render();setTimeout(()=>{if(B===b&&!b.done)eat()},2500);return}
 b.ok++;S.ok++;b.combo++;S.ryo+=10;S.u[j.id]=(S.u[j.id]||0)+1;b.ch-=cc(j);mp('ok');if(j.t=='nin')mp('nin');mp('streak',b.combo);
 let d=0,x='',m=mast(j.id)*lm()*(1+(S.st[j.t]||0)*.04)*(1+((S.jl[j.id]||1)-1)*.12)*(b.bs.rpw?1.25:1)*(.9+Math.random()*.2);
@@ -249,7 +257,7 @@ d=Math.round(d);b.e.hp-=d;if(j.t!='sel')b.ch=Math.min(mxCh(),b.ch+2);
 const t=`${j.n}${d?' → '+d+' dmg':''}${x}${pc!=null?' · exactitud '+pc+'%':''}`;b.res={ok:1,t};b.log.push(`✅ ¡Correcto! +10🪙 · ${t}`);
 b.dead=b.e.hp<=0;if(b.dead)b.e.hp=0;b.ph='res';save();render();
 setTimeout(()=>{if(B!==b||b.done)return;b.res=null;if(b.dead){b.dead=0;kill()}else nxt()},1400)}
-function kill(){const b=B,e=b.e,r=(15+e.lv*5)*(b.bs.rry?2:1),x=(20+e.lv*8)*(e.b?2:1)*(b.bs.rxp?2:1);b.kills++;mp('kills');if(e.b)mp('boss');S.ryo+=r;b.gr+=r;b.gx+=x;addXp(x);b.log.push(`💥 ¡${e.n} derrotado! +${r} ryō · +${x} XP`);save();spawn();nxt()}
+function kill(){const b=B,e=b.e,r=Math.round((15+e.lv*5)*(b.bs.rry?2:1)*b.df),x=Math.round((20+e.lv*8)*(e.b?2:1)*(b.bs.rxp?2:1)*b.df);b.kills++;mp('kills');if(e.b)mp('boss');S.ryo+=r;b.gr+=r;b.gx+=x;addXp(x);b.log.push(`💥 ¡${e.n} derrotado! +${r} ryō · +${x} XP`);save();spawn();nxt()}
 function use(id){const b=B,it=IT[id];if(b.ph!='inv'||!S.inv[id])return;
 if(it.g=='sc'){if(b.bs[id])return T('Ese rollo ya está activo');b.bs[id]=1;if(id=='rtm')b.d=[b.d[0]+4,b.d[1]];b.log.push(`${it.i} ${it.n} activado`)}
 else{if(it.dm){const d=Math.round(it.dm*lm()*(b.bs.rpw?1.25:1));b.e.hp-=d;b.log.push(`${it.i} ${it.n} → ${d} dmg`)}
@@ -265,7 +273,7 @@ else if(b.ph=='inv')p=`<div class="ct">🎒 Inventario</div><div class="tj">${Ob
 else p=`<div class="ct">${w?'⏳ Esperando...':'⚔️ ¿Qué hará '+esc(S.name)+'?'}</div><div class="tj" style="${w?'opacity:.45':''}">${S.eq.map(id=>J.find(x=>x.id==id)).map(j=>{const lo=b.ch<cc(j);return `<button ${w?'disabled':''} style="${lo?'opacity:.55':''}" onclick="pick('${j.id}')"><span class="tb">${TY[j.t]}${j.e?' '+EL[j.e][0]:''}</span><div><b>${j.n}</b></div><div class="mu">${j.t=='sel'?'+25 chakra':`Chakra: ${cc(j)} · ${j.t=='gen'?'Congela '+j.f+'s':'Poder: '+j.p}`}</div>${lo?'<div style="color:var(--rd);font-size:11px;font-weight:700">Sin chakra suficiente</div>':''}</button>`}).join('')}</div><button onclick="B.ph='inv';render()" ${w?'disabled':''}>🎒 Inventario</button>`;
 if(b.ph=='q')md=`<div class="ov"><div class="md"><div class="mi">${qh()}</div></div></div>`;
 else if(b.ph=='res'&&b.res)md=b.res.ok?`<div class="ov"><div class="md good"><div class="rs"><div class="e">✅</div><div class="ct" style="color:var(--gr)">¡CORRECTO!</div><div class="an">${esc(b.res.t)}</div></div></div></div>`:`<div class="ov"><div class="md bad"><div class="rs"><div class="e">❌</div><div class="ct" style="color:var(--rd)">¡INCORRECTO!</div><p class="mu">La respuesta correcta era:</p><div class="an">${esc(b.res.sol)}</div>${b.res.n!=null?`<p class="mu">Tu respuesta coincidió un ${b.res.n}%</p>`:''}<p style="color:#ff7a5c">😤 ¡${esc(e.n)} atacará en 2.5s!</p></div></div></div>`;
-$('#v').innerHTML=`<div class="bt"><button onclick="flee()">🏃 Huir</button><div>⚔️ Nv.${e.lv} ${e.n} ${e.b?'<span class="bdg">JEFE</span>':''}</div><div class="mu">Pregunta ${b.qi%n+1}/${n}</div></div><div id="rt" class="rt"></div>
+$('#v').innerHTML=`<div class="bt"><button onclick="flee()">🏃 Huir</button><div>⚔️ Nv.${e.lv} ${e.n} ${e.b?'<span class="bdg">JEFE</span>':''}</div><div class="mu">🎚️ Reto x${b.df.toFixed(1)} · Pregunta ${b.si%n+1}/${n}</div></div><div id="rt" class="rt"></div>
 <div class="bw"><div class="sc"><div class="ic e1"><b>${e.n}</b><div class="hr"><span>Nv.${e.lv}</span><span>${Math.max(0,e.hp)}/${e.mx}</span></div>${bar(eh,hc(eh))}${e.e?`<span class="tb">${EL[e.e][0]} ${EL[e.e][1]}</span>`:''}</div>
 <div class="spr s1">${e.i}</div><div class="spr s2">${S.av}</div>
 <div class="ic e2"><b>${esc(S.name)}</b><div class="hr"><span>Nv.${S.lv} · ${rk()}</span><span>HP ${b.hp}/${mxHp()}</span></div>${bar(hp,hc(hp))}<div class="hr"><span>Chakra</span><span>${b.ch}/${mxCh()}</span></div>${bar(b.ch/mxCh()*100,'var(--bl)')}<span class="tb">Combo ${b.combo}</span></div></div>
